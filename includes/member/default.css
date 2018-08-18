@@ -1,0 +1,161 @@
+
+/** BASIC */
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background:  url(images/img01.gif) repeat-y center top;
+	text-align: justify;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	color: #926D81
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: #B54482;
+}
+
+a {
+	font-weight: bold;
+	color: #4773C1;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #B44480;
+}
+
+/** HEADER */
+
+#header {
+	width: 100%;
+	margin: 0px auto;
+	padding: 5px 0px 6px 0px;
+	background-color: #4773C1;
+        min-height: 50px;
+}
+
+#header h1 {
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+#header h2 {
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	font-size: 14px;
+}
+#header ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	text-align: center;
+        color: #FFFFFF;
+        font-family: sans-serif;
+        font-size: 18px;
+}
+
+#header li {
+	display: inline;
+}
+
+#header a {
+	padding: 5px 15px;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+/** MENU */
+
+#menu {
+	width: 100%;
+	margin: 0px auto;
+	padding: 5px 0px 6px 0px;
+	background-color: #4773C1;
+}
+
+#menu ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	text-align: center;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	padding: 5px 15px;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#menu a:hover {
+	background-color: #6D92D5;
+}
+
+/** CONTENT */
+
+#content {
+	width: 100%;
+	margin: 0px auto;
+	padding: 20px 0px 0px 0px;
+        min-height: 550px;
+}
+
+#content h2, #content h3, #content h4, #content h5, #content h6 {
+	font-weight: normal;
+        margin-left: 20px;
+}
+
+#content p, #content ul, #content ol {
+	line-height: 150%;
+}
+
+#left {
+	float: left;
+	width: 480px;
+	padding: 0px 20px 40px 20px;
+}
+
+#right {
+	float: right;
+	width: 210px;
+	padding: 0px 20px 40px 20px;
+}
+
+/** FOOTER */
+
+#footer {
+	clear: both;
+	width: 100%;
+	margin: 0px auto;
+	border-top: 2px solid #4773C1;
+}
+
+#footer p {
+	margin: 0px;
+	padding: 5px 10px;
+	color: #4773C1;
+        text-align: center;
+        
+}
+.error
+{
+    color: red;
+    
+}
+.success
+{
+    color:springgreen;
+}
