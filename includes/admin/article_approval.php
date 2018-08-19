@@ -21,7 +21,7 @@ if(isset($_POST['approve'])){
                 $article_id=$_POST['id'];
                 $email_user=$_POST['email_user'];
                 
-                $query_approve="update article set article_activation='YES' where article_id='$article_id'";
+                $query_approve="update article set article_activation='YES',message='' where article_id='$article_id'";
                 require_once '../db.inc.php';
                 mysql_query($query_approve);
                 //email
@@ -39,6 +39,17 @@ if(isset($_POST['approve'])){
                     
                 }
             ?>
+<?php
+if(isset($_POST['disapprove'])){
+    $article_id=$_POST['id'];
+                $email_user=$_POST['email_user'];
+                $message=$_POST['message'];
+                $query_disapprove="update article set disapprove='YES',message='$message' where article_id='$article_id'";
+                require_once '../db.inc.php';
+                mysql_query($query_disapprove);
+                //email
+}
+?>
 <?php
 //$query_article_details="select * from article";
 //    require_once '../db.inc.php';
@@ -226,7 +237,7 @@ if(isset($_POST['approve'])){
     $result=  mysql_query($query_article_details);
             $count=1;
         while ($row_article = mysql_fetch_assoc($result)) {
-            if($row_article['article_activation']!='YES')
+            if($row_article['article_activation']!='YES' && $row_article['disapprove']!='YES')
             {
             $article_id=$row_article['article_id'];
         $email_user=$row_article['creator_email'];
@@ -243,12 +254,11 @@ if(isset($_POST['approve'])){
             echo "<li style='text-align: justify;'>"."Article Category: ".$row_article['article_category'];
             echo "<li style='text-align: justify;'>"."Article Content: "."<br/>"."<textarea style='overflow-y:scroll;height:180px;width:420px;'>".$row_article['article_content']."</textarea>";
             echo"<br/>"; echo "<input type='submit' name='approve' value='Approve'>";
+            echo "<input type='submit' name='disapprove' value='Dis-Approve'>";
+            echo "<input type='text' name='message' placeholder='Dis-Approval message'>";
             $count=$count+1;
-            
-            
             echo "</ul>";
             echo "</form>";
-            
             }
             
         }

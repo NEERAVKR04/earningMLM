@@ -161,7 +161,7 @@ if(mysql_query($result_rfr)>=0)
 }
 </style>
 <div class="vertical-menu">
-  <a href="#" class="active">Home</a>
+    <a href="index.php" class="active">Home</a>
   <a href="article.php">Write Article</a>
   <a href="watch_adds.php">Watch Adds</a>
   <a href="profile.php">Profile</a>
@@ -175,59 +175,77 @@ if(mysql_query($result_rfr)>=0)
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-
-
 <div class="vertical-content">
-    <style>
-        .activation{
-        float: left;
-        padding: 0px 12px;
-        border: 1px solid;
-        width: 65%;
-        min-height: 50px;
-        text-align: justify;
-        margin-left: 5rem;
-        margin-top: 1rem;
-        
-    }
-    </style>
-    <div class="activation">
-        <br/>
-<?php
-if($activation_status!='Y')
-{
-    echo "<label style='color:black'>"."Hey!!"." "."$first_name"."."."You need to "."<label style='color:red;'>". "activate "."</label>". "your account by making payment of your selected package"." i.e"." "."$package"."</label>"."<br/>";
-    echo "<br/>";
-    echo "<label style='color:#4773C1'>"."Or, If you have made payment already then upload your payment proof in payment proof option to get your account activated & enable earning features & withdrawals!!"."</label>";
-}
- else {
-        
-}
-?>
-    </div>
-    <style>
-    .square{
-        height: 200px;
-        width: 200px;
-        border: 3px solid;
-        display: inline-block;
-        float: left;
-        margin-left: 8%;
-        margin-top: 5%;
-        text-align: center;
-        font-size: 20px;
-        color: #4773C1;
-        
-        
-    }
-</style>
-
-
-<div class="square"><b style="color: #000;"><br/>Total Balance<?php echo "<br>"."<br>".$credit." $"; ?></b></div>
-<div class="square"><b style="color: #000;"><br/>Total Withdrawal<?php echo "<br>"."<br>".$withdrawal." $"; ?></b></div>
-<div class="square"><b style="color: #000;"><br/>Total Referrals<?php echo "<br>"."<br>".$referral_no." $"; ?></b></div>
-<br/>
     
+    <style>
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 79.7%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    //text-align: center;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+#customers tr{
+    max-height: 2px;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    
+}
+</style>
+<?php
+echo "<table id='customers'>
+<tr>
+<th>Referral List</th>
+</tr>";
+echo "</table>";
+echo "<form action='referral_list.php' method='POST'>";
+echo "<table id='customers'>
+<tr>
+<th style='background-color: #4773C1;'>Name</th>
+<th style='background-color: #4773C1;'>Email</th>
+<th style='background-color: #4773C1;'>Mobile</th>
+<th style='background-color: #4773C1;'>Referral Code</th>
+<th style='background-color: #4773C1;'>Referral Count</th>
+
+
+</tr>";
+$query_users="select * from users where username='$username' ";
+    require_once '../db.inc.php';
+    $result_users=  mysql_query($query_users);
+    while($row=  mysql_fetch_array($result_users)){
+        $referral_code=$row['referral_code'];
+    }
+    $query_referrals="select * from users where refer_code='$referral_code'";
+    require_once '../db.inc.php';
+    $result_referrals=  mysql_query($query_referrals);
+    while ($row1 = mysql_fetch_array($result_referrals)) {
+    echo "<tr>";
+    echo "<td>" . $row1['first_name'] ." ".$row1['last_name']. "</td>";
+    echo "<td>" . $row1['email'] . "</td>";
+    echo "<td>" . $row1['mobile'] . "</td>";
+    echo "<td>".$row1['referral_code']."</td>";
+    echo "<td>".$row1['referral_count']."</td>";
+    echo "</tr>";
+}
+
+
+
+echo "</table>";
+?>
 </div>
 
     

@@ -47,7 +47,7 @@ if(isset($_POST['post'])){
     }
     if(count($errors)==0)
     {
-    $query_article="insert into article values('$article_id','$title','$content','$category','$article_activation','$creator_name','$creator_email')";
+    $query_article="insert into article values('$article_id','$title','$content','$category','$article_activation','$creator_name','$creator_email','NO','')";
     require_once '../db.inc.php';
     mysql_query($query_article);
         
