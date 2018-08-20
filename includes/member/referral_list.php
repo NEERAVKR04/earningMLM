@@ -233,6 +233,8 @@ $query_users="select * from users where username='$username' ";
     require_once '../db.inc.php';
     $result_referrals=  mysql_query($query_referrals);
     while ($row1 = mysql_fetch_array($result_referrals)) {
+        $members_referral_code=$row1['referral_code'];
+        
     echo "<tr>";
     echo "<td>" . $row1['first_name'] ." ".$row1['last_name']. "</td>";
     echo "<td>" . $row1['email'] . "</td>";
@@ -240,7 +242,25 @@ $query_users="select * from users where username='$username' ";
     echo "<td>".$row1['referral_code']."</td>";
     echo "<td>".$row1['referral_count']."</td>";
     echo "</tr>";
+    //2nd level
+
+$query_2level="select * from users where refer_code='$members_referral_code'";
+require_once '../db.inc.php';
+$result_2level=  mysql_query($query_2level);
+while ($row2 = mysql_fetch_array($result_2level)) {
+        $members_referral_code=$row2['referral_code'];
+        
+    echo "<tr>";
+    echo "<td>" . $row2['first_name'] ." ".$row1['last_name']. "</td>";
+    echo "<td>" . $row2['email'] . "</td>";
+    echo "<td>" . $row2['mobile'] . "</td>";
+    echo "<td>".$row2['referral_code']."</td>";
+    echo "<td>".$row2['referral_count']."</td>";
+    echo "</tr>";
 }
+
+}
+
 
 
 
