@@ -13,6 +13,7 @@ if(mysql_query($result_rfr)>=0)
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
+          $lifetime_earning=$credit+$withdrawal;
        }
    }
 ?>
@@ -158,16 +159,17 @@ if(mysql_query($result_rfr)>=0)
 }
 </style>
 <div class="vertical-menu">
-  <a href="#" class="active">Home</a>
-  <a href="#">Write Article</a>
+    <a href="index.php" class="active">Home</a>
+  <a href="article.php">Write Article</a>
+  <a href="sendpayment.php">Payment Options</a>
   <a href="watch_adds.php">Watch Adds</a>
-  <a href="#">Profile</a>
-  <a href="#">Wallet</a>
-  <a href="#">Withdrawal</a>
-  <a href="#">Your Referrals</a>
+  <a href="profile.php">Profile</a>
+  <a href="wallet.php">Wallet</a>
+  <a href="withdrawal_history.php">Withdrawal</a>
+  <a href="referral_list.php">Your Referrals</a>
   <a href="#">Advertisement Campaign</a>
-  <a href="#">How To work?</a>
-  <a href="#" class="active-red">LOGOUT</a>
+  <a href="payment.php">Payment Proofs</a>
+  <a href="logout.php" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
@@ -189,9 +191,9 @@ if(mysql_query($result_rfr)>=0)
         
     }
 </style>
-<div class="square"><b style="color: #000;"><br/>Total Balance<?php echo "<br>"."<br>".$credit; ?></b></div>
-<div class="square"><b style="color: #000;"><br/>Total Withdrawal<?php echo "<br>"."<br>".$withdrawal; ?></b></div>
-<div class="square"><b style="color: #000;"><br/>Lifetime Earning<?php echo "<br>"."<br>".$lifetime_earning; ?></b></div>
+<div class="square"><b style="color: #000;"><br/>Total Balance<?php echo "<br>"."<br>".$credit." $"; ?></b></div>
+<div class="square"><b style="color: #000;"><br/>Total Withdrawal<?php echo "<br>"."<br>".$withdrawal." $"; ?></b></div>
+<div class="square"><b style="color: #000;"><br/>Lifetime Earning<?php echo "<br>"."<br>".$lifetime_earning." $"; ?></b></div>
 <br/>
     
 </div>

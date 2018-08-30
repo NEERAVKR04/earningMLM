@@ -2,6 +2,7 @@
 require_once './secure.inc.php';
 $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
+$email=$_SESSION['email'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
 $referral_code_check=  mysql_query($query_check_code);
@@ -13,6 +14,8 @@ if(mysql_query($result_rfr)>=0)
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
+          $activation_status=$row["activation"];
+          $package=$row["package"];
        }
    }
 ?>
@@ -155,83 +158,78 @@ if(mysql_query($result_rfr)>=0)
         border-left: none;
         min-height: 550px;
     }
+    
 }
 </style>
 <div class="vertical-menu">
     <a href="index.php" class="active">Home</a>
   <a href="article.php">Write Article</a>
+  <a href="sendpayment.php">Payment Options</a>
   <a href="watch_adds.php">Watch Adds</a>
   <a href="profile.php">Profile</a>
   <a href="wallet.php">Wallet</a>
-  <a href="#">Withdrawal</a>
-  <a href="#">Your Referrals</a>
+  <a href="withdrawal_history.php">Withdrawal</a>
+  <a href="referral_list.php">Your Referrals</a>
   <a href="#">Advertisement Campaign</a>
-  <a href="paymentproofs.php">Payment Proofs</a>
-  <a href="#" class="active-red">LOGOUT</a>
+  <a href="payment.php">Payment Proofs</a>
+  <a href="logout.php" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-<div class="vertical-content">
+<div class="vertical-content"> 
     <style>
-    .square{
-        height: 200px;
-        width: 200px;
-        border: 3px solid;
-        display: inline-block;
-        float: left;
-        margin-left: 8%;
-        margin-top: 5%;
-        text-align: center;
-        font-size: 20px;
-        color: #4773C1;
-        
-        
-    }
-</style>
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 79.7%;
+}
 
-<h3 style="margin-left:1rem;float: left;">Upload Payment Receipt/Transaction Id:-</h3>
-<form action="../../uploads/upload.php" method="POST" enctype="multipart/form-data">
-    
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-        <label style="margin-left: 1rem; float: left;color: #000;">Your Name: </label>
-            <input type="text" name="tname" value="" style="margin-left: 1rem; float: left;">
-    
-        <label style="margin-left: 1rem; float: left;color: #000;">Your Email: </label>
-    <input type="text" name="temail" value="" style="margin-left: 1rem; float: left;">
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    //text-align: center;
+}
 
-            <label style="margin-left: 1rem; float: left;color: #000;">Transaction Id: </label>
-    <input type="text" name="tid" value="" style="margin-left: 1rem; float: left;">
-    <br/><br/>
-    <hr/>
-    <center> <label style="font-size: large;color: #000;">Upload Proof:</label>
-    
-    <input type="file" name="payment_proof" id="payment_proof" style=" width: 20%;
-    padding: 12px 20px;
-    alignment-adjust: central;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #4773C1;
-    color: white;
-    text-align: center;border-radius: 3rem;" value="Upload">
-    <br/>
-        <input type="submit" name="upload" value="Upload Proof" style=" width: 20%;
-    padding: 12px 20px;
-    alignment-adjust: central;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+#customers tr{
+    max-height: 2px;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
     background-color: #4CAF50;
     color: white;
-    text-align: center;
-    border-radius: 3rem;"></center>
-</form>   
-</div>
+    
+}
+</style>
+<?php
+echo "<form action='#' method='POST'>";
+echo "<table id='customers'>
+<tr>
+<th>Withdrawal Amount</th>
+<th>Withdrawal Date</th>
 
+</tr>";
+$query_his="select * from withdrawal where email='$email' ";
+    require_once '../db.inc.php';
+    $result_his=  mysql_query($query_his);
+    while($row=  mysql_fetch_array($result_his)){
+       
+    echo "<tr>";
+    echo "<td>"."Withdrawal of "."<b>".$row['amount'] ."$"."</b>" ." has been processed!! ".$row1['last_name']. "</td>";
+    echo "<td>".$row['date'] . "</td>";
+    
+    echo "</tr>";
+    }
+    
+echo "</table>";
+?>
+</div>
 
     
   

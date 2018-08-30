@@ -3,11 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/MLM/includes/member/popupstyle.css</file>
-            <file>file:/C:/xampp/htdocs/MLM/includes/member/header.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/menu.inc.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/profile.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/article.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/admin/upgarde_request.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/sendpayment.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/wallet.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/blog.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/payment.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/admin/sendpayment.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/watch_adds.php</file>
             <file>file:/C:/xampp/htdocs/MLM/includes/member/index.php</file>
             <file>file:/C:/xampp/htdocs/MLM/includes/member/notification.php</file>
-            <file>file:/C:/xampp/htdocs/MLM/includes/member/watch_adds.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/referral_list.php</file>
+            <file>file:/C:/xampp/htdocs/MLM/includes/member/withdrawal_history.php</file>
         </group>
     </open-files>
 </project-private>

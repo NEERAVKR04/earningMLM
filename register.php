@@ -143,7 +143,7 @@ if(isset($_POST['submit'])){
             
             $password=  md5($password);
             echo "$referral_count";
-            $query= "insert into users values('$username','$email','$first_name','$last_name','$password','$mobile','$package','$refer_code','$referee_name','$referral_code','$verification','Y','N','member','0','$package_name','0','0','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','','','','','','','','')";
+            $query= "insert into users values('$username','$email','$first_name','$last_name','$password','$mobile','$package','$refer_code','$referee_name','$referral_code','$verification','Y','N','member','0','$package_name','0','0','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','NO','','','','','','','','','','')";
             require_once './includes/db.inc.php';
             mysql_query($query);
             $template=2;     

@@ -138,8 +138,9 @@ mysql_query($query_update1);
 
 .vertical-menu {
     width: 20%;
+    min-height: 975px;
+    max-height: 975px;
     float: left;
-    min-height: 550px;
     margin-left: 0px;
     background-color: #eee;
    
@@ -174,51 +175,33 @@ mysql_query($query_update1);
         width: 80%;
         border-left: none;
         min-height: 550px;
+        max-height: 550px;
+        overflow-y: auto;
     }
 }
 </style>
 <div class="vertical-menu">
-  <a href="#" class="active">Home</a>
-  <a href="#">Write Article</a>
-  <a href="#">Watch Adds</a>
-  <a href="#">Profile</a>
-  <a href="#">Wallet</a>
-  <a href="#">Withdrawal</a>
-  <a href="#">Your Referrals</a>
+    <a href="index.php" class="active">Home</a>
+  <a href="article.php">Write Article</a>
+  <a href="sendpayment.php">Payment Options</a>
+  <a href="watch_adds.php">Watch Adds</a>
+  <a href="profile.php">Profile</a>
+  <a href="wallet.php">Wallet</a>
+  <a href="withdrawal_history.php">Withdrawal</a>
+  <a href="referral_list.php">Your Referrals</a>
   <a href="#">Advertisement Campaign</a>
-  <a href="#">How To work?</a>
-  <a href="#" class="active-red">LOGOUT</a>
+  <a href="payment.php">Payment Proofs</a>
+  <a href="logout.php" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-<div class="vertical-content">
-    <style>
-    .square{
-        height: 200px;
-        width: 200px;
-        border: 3px solid;
-        display: inline-block;
-        float: left;
-        margin-left: 8%;
-        margin-top: 5%;
-        text-align: center;
-        font-size: 20px;
-        color: #4773C1;
-        
-        .table-style{
-            padding: 1px 1px 1px 1px;
-        }
-        .btn-ads{
-            border-radius: 10px;
-        }
-    }
-</style>
+<div id='rightdiv' class="vertical-content">
 <style>
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 79.75%;
+    width: 79.9%;
 }
 
 #customers td, #customers th {
@@ -239,6 +222,13 @@ mysql_query($query_update1);
     color: white;
 }
 </style>
+<script>
+var right=document.getElementById('rightdiv').style.height;
+var left=document.getElementById('leftdiv').style.height;
+if(right>left){
+    document.getElementById('leftdiv').style.height=right;
+}
+</script>
 <?php
 $query_link_status="select * from users where username='$username'";
 $result_link_status=  mysql_query($query_link_status);
@@ -384,8 +374,7 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }$query_ads_4="select * from advertisement where ads_id='$ads_id_4'";
 $result_4=  mysql_query($query_ads_4);
-while($row=  mysql_fetch_array($result_4))
-{
+while($row=  mysql_fetch_array($result_4)){
 if($value4!='YES')
     {
 echo "<tr>";
@@ -417,6 +406,486 @@ echo "<td>" . $row['ads_name'] . "</td>";
 
     echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable5(this)' target='_BLANK'>"."View Ads";
     echo "<td>"."<a id='changes5' href='update_db5.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_6="select * from advertisement where ads_id='$ads_id_6'";
+$result_6=  mysql_query($query_ads_6);
+while($row=  mysql_fetch_array($result_6))
+{
+if($value6!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable6(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes6' href='update_db6.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_7="select * from advertisement where ads_id='$ads_id_7'";
+$result_7=  mysql_query($query_ads_7);
+while($row=  mysql_fetch_array($result_7))
+{
+if($value7!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable7(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes7' href='update_db7.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_8="select * from advertisement where ads_id='$ads_id_8'";
+$result_8=  mysql_query($query_ads_8);
+while($row=  mysql_fetch_array($result_8))
+{
+if($value8!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable8(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes8' href='update_db8.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_9="select * from advertisement where ads_id='$ads_id_9'";
+$result_9=  mysql_query($query_ads_9);
+while($row=  mysql_fetch_array($result_9))
+{
+if($value9!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable9(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes9' href='update_db9.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_10="select * from advertisement where ads_id='$ads_id_10'";
+$result_10=  mysql_query($query_ads_10);
+while($row=  mysql_fetch_array($result_10))
+{
+if($value10!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable10(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes10' href='update_db10.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_11="select * from advertisement where ads_id='$ads_id_11'";
+$result_11=  mysql_query($query_ads_11);
+while($row=  mysql_fetch_array($result_11))
+{
+if($value11!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable11(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes11' href='update_db11.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_12="select * from advertisement where ads_id='$ads_id_12'";
+$result_12=  mysql_query($query_ads_12);
+while($row=  mysql_fetch_array($result_12))
+{
+if($value12!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable12(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes12' href='update_db12.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_13="select * from advertisement where ads_id='$ads_id_13'";
+$result_13=  mysql_query($query_ads_13);
+while($row=  mysql_fetch_array($result_13))
+{
+if($value13!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable13(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes13' href='update_db13.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_14="select * from advertisement where ads_id='$ads_id_14'";
+$result_14=  mysql_query($query_ads_14);
+while($row=  mysql_fetch_array($result_14))
+{
+if($value14!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable14(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes14' href='update_db14.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_15="select * from advertisement where ads_id='$ads_id_15'";
+$result_15=  mysql_query($query_ads_15);
+while($row=  mysql_fetch_array($result_15))
+{
+if($value15!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable15(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes15' href='update_db15.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_16="select * from advertisement where ads_id='$ads_id_16'";
+$result_16=  mysql_query($query_ads_16);
+while($row=  mysql_fetch_array($result_16))
+{
+if($value16!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable16(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes16' href='update_db16.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_17="select * from advertisement where ads_id='$ads_id_17'";
+$result_17=  mysql_query($query_ads_17);
+while($row=  mysql_fetch_array($result_17))
+{
+if($value17!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable17(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes17' href='update_db17.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_18="select * from advertisement where ads_id='$ads_id_18'";
+$result_18=  mysql_query($query_ads_18);
+while($row=  mysql_fetch_array($result_18))
+{
+if($value18!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable18(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes18' href='update_db18.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_19="select * from advertisement where ads_id='$ads_id_19'";
+$result_19=  mysql_query($query_ads_19);
+while($row=  mysql_fetch_array($result_19))
+{
+if($value9!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable19(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes19' href='update_db19.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_20="select * from advertisement where ads_id='$ads_id_20'";
+$result_20=  mysql_query($query_ads_20);
+while($row=  mysql_fetch_array($result_20))
+{
+if($value20!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable20(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes20' href='update_db20.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_21="select * from advertisement where ads_id='$ads_id_21'";
+$result_21=  mysql_query($query_ads_21);
+while($row=  mysql_fetch_array($result_21))
+{
+if($value21!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable21(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes21' href='update_db21.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_22="select * from advertisement where ads_id='$ads_id_22'";
+$result_22=  mysql_query($query_ads_22);
+while($row=  mysql_fetch_array($result_22))
+{
+if($value22!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable22(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes22' href='update_db22.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_23="select * from advertisement where ads_id='$ads_id_23'";
+$result_23=  mysql_query($query_ads_23);
+while($row=  mysql_fetch_array($result_23))
+{
+if($value23!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable23(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes23' href='update_db23.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_24="select * from advertisement where ads_id='$ads_id_24'";
+$result_24=  mysql_query($query_ads_24);
+while($row=  mysql_fetch_array($result_24))
+{
+if($value24!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable24(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes24' href='update_db24.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
+    
+    }
+ else {
+        echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."Completed"."</td>";
+    echo "<td>"."Reward Credited";
+
+    }
+}
+$query_ads_25="select * from advertisement where ads_id='$ads_id_25'";
+$result_25=  mysql_query($query_ads_25);
+while($row=  mysql_fetch_array($result_25))
+{
+if($value25!='YES')
+    {
+echo "<tr>";
+echo "<td>" . $row['ads_id'] . "</td>";
+echo "<td>" . $row['ads_name'] . "</td>";
+
+    echo "<td>"."<a href=\"".$row['ads_link']."\" onclick='clickAndDisable25(this)' target='_BLANK'>"."View Ads";
+    echo "<td>"."<a id='changes25' href='update_db25.php' style='visibility:hidden'>"."Confirm"."</a>"." - Click on view ads to get reward"."</td>";
     
     }
  else {
@@ -505,24 +974,7 @@ function clickAndDisable1(link) {
      document.getElementById("changes2").style.visibility="visible";
      link.onclick = function(event) {
         event.preventDefault();
-        
-//        jQuery.ajax({
-//            type: "POST",
-//    url: 'udate_db2.php',
-//    dataType: 'json',
-//    data: {functionname: 'add', arguments: [1, 2]},
-//
-//    success: function (obj, textstatus) {
-//                  if( !('error' in obj) ) {
-//                      yourVariable = obj.result;
-//                  }
-//                  else {
-//                      console.log(obj.error);
-//                  }
-//            }
-//        });
-                
-      
+
      }
    }   
 </script>
@@ -552,6 +1004,246 @@ function clickAndDisable4(link) {
 function clickAndDisable5(link) {
      // disable subsequent clicks
      document.getElementById("changes5").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable6(link) {
+     // disable subsequent clicks
+     document.getElementById("changes6").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable7(link) {
+     // disable subsequent clicks
+     document.getElementById("changes7").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable8(link) {
+     // disable subsequent clicks
+     document.getElementById("changes8").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable9(link) {
+     // disable subsequent clicks
+     document.getElementById("changes9").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable10(link) {
+     // disable subsequent clicks
+     document.getElementById("changes10").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable11(link) {
+     // disable subsequent clicks
+     document.getElementById("changes11").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable12(link) {
+     // disable subsequent clicks
+     document.getElementById("changes12").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable13(link) {
+     // disable subsequent clicks
+     document.getElementById("changes13").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable14(link) {
+     // disable subsequent clicks
+     document.getElementById("changes14").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable15(link) {
+     // disable subsequent clicks
+     document.getElementById("changes15").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable16(link) {
+     // disable subsequent clicks
+     document.getElementById("changes16").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable17(link) {
+     // disable subsequent clicks
+     document.getElementById("changes17").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable18(link) {
+     // disable subsequent clicks
+     document.getElementById("changes18").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable19(link) {
+     // disable subsequent clicks
+     document.getElementById("changes19").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable20(link) {
+     // disable subsequent clicks
+     document.getElementById("changes20").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable21(link) {
+     // disable subsequent clicks
+     document.getElementById("changes21").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable22(link) {
+     // disable subsequent clicks
+     document.getElementById("changes22").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable23(link) {
+     // disable subsequent clicks
+     document.getElementById("changes23").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable24(link) {
+     // disable subsequent clicks
+     document.getElementById("changes24").style.visibility="visible";
+     
+     link.onclick = function(event) {
+        event.preventDefault();
+        //var loadTo = "#id_of_the_div_or_other_element_to_hold_any_PHP_output";
+      
+     }
+   }   
+   </script>
+   <script type="text/javascript">   
+function clickAndDisable25(link) {
+     // disable subsequent clicks
+     document.getElementById("changes25").style.visibility="visible";
      
      link.onclick = function(event) {
         event.preventDefault();

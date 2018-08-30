@@ -21,7 +21,7 @@ if(isset($_POST['approve'])){
                 $article_id=$_POST['id'];
                 $email_user=$_POST['email_user'];
                 
-                $query_approve="update article set article_activation='YES',message='' where article_id='$article_id'";
+                $query_approve="update article set article_activation='YES' where article_id='$article_id'";
                 require_once '../db.inc.php';
                 mysql_query($query_approve);
                 //email
@@ -38,18 +38,10 @@ if(isset($_POST['approve'])){
                 }
                     
                 }
+               
+                
+            
             ?>
-<?php
-if(isset($_POST['disapprove'])){
-    $article_id=$_POST['id'];
-                $email_user=$_POST['email_user'];
-                $message=$_POST['message'];
-                $query_disapprove="update article set disapprove='YES',message='$message' where article_id='$article_id'";
-                require_once '../db.inc.php';
-                mysql_query($query_disapprove);
-                //email
-}
-?>
 <?php
 //$query_article_details="select * from article";
 //    require_once '../db.inc.php';
@@ -67,7 +59,6 @@ if(isset($_POST['disapprove'])){
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>MuslimIn</title>
  
 <meta name="keywords" content="" />
@@ -202,10 +193,11 @@ if(isset($_POST['disapprove'])){
         border-left: none;
         min-height: 550px;
         
+        
     }
 }
 </style>
-<div class="vertical-menu">
+<!--<div class="vertical-menu">
   <a href="#" class="active">Home</a>
   <a href="article_approval.php">Approve Articles</a>
   <a href="activate_users.php">Activate Id</a>
@@ -219,50 +211,49 @@ if(isset($_POST['disapprove'])){
   <a href="#">How To work?</a>
   <a href="#" class="active-red">LOGOUT</a>
   
-    <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
--->
-    </div>
-<div class="vertical-content">
-    <style>
-        .li-article{
-            list-style: none;
-            float: left;
-            list-style-type: none;
-        }
-    </style>
+    <b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
+
+    </div>-->
+<div class="vertical-content" style="height: 800px;">
 <!--"<font style='margin-left: 1rem'>"-->
-    
+<h2 style="text-align: center;color: #000;">Public Blog</h2>
     <?php
     $query_article_details="select * from article";
     require_once '../db.inc.php';
     $result=  mysql_query($query_article_details);
             $count=1;
+            if($count<=10)
+            {
         while ($row_article = mysql_fetch_assoc($result)) {
-            if($row_article['article_activation']!='YES' && $row_article['disapprove']!='YES')
+            if($row_article['article_activation']=='YES')
             {
             $article_id=$row_article['article_id'];
         $email_user=$row_article['creator_email'];
             echo "<form method='POST' action='article_approval.php'>";
-            echo "<ul type='none' style='margin-left:0.1rem;float:left;'>";
-            echo "$count".".";
-            echo "<h3>"."<label style='color:#2196F3'>"."Posted By: "."</label>".$row_article['creator_name']."</h3>";
-            echo "<input readonly type='text' name='email_user' value='$email_user'>";
-            echo "<li>"."<input readonly type='text' name='id' value='$article_id'>"."</li>";
-            echo "<br/>";
+            echo "<ul type='none' style='margin-left:0.1rem;'>";
+            
+            //echo "<input readonly type='text' name='email_user' value='$email_user'>";
+            //echo "<li>"."<input readonly type='text' name='id' value='$article_id'>"."</li>";
+            
             echo "<li style='color: white;
-                   padding: 8px;background-color: #4CAF50;overflow:hidden'>"."Article Title: ".$row_article['article_title']."</li>";
+                   padding: 8px;background-color: #4CAF50;overflow:hidden;width:95%'>".$row_article['article_title']."</li>";
             echo "<br/>";
-            echo "<li style='text-align: justify;'>"."Article Category: ".$row_article['article_category'];
-            echo "<li style='text-align: justify;'>"."Article Content: "."<br/>"."<textarea style='overflow-y:scroll;height:180px;width:420px;'>".$row_article['article_content']."</textarea>";
-            echo"<br/>"; echo "<input type='submit' name='approve' value='Approve'>";
-            echo "<input type='submit' name='disapprove' value='Dis-Approve'>";
-            echo "<input type='text' name='message' placeholder='Dis-Approval message'>";
+            echo "<li style='text-align: justify;color:#000;'>"."Posted under: ".$row_article['article_category'];
+            echo "<li style='text-align: justify;overflow:hidden;width:95%;'>"."<br/>".$row_article['article_content'];
+            echo "<h5>"."<label style='color:#2196F3'>"."Posted By: "."</label>".$row_article['creator_name']."</h5>";
+
+            echo "<hr>";
+            //echo"<br/>"; echo "<input type='submit' name='approve' value='Approve'>";
             $count=$count+1;
+            
+            
             echo "</ul>";
             echo "</form>";
+            
             }
             
         }
+            }
     ?>
 </div>
 

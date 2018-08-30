@@ -10,15 +10,31 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $check_insert=0;
 if(isset($_POST['submit'])){
+    $ad_id=1;
+    $query_check_ad_id="select * from advertisement ORDER BY ads_id DESC LIMIT 1";
+    require_once '../db.inc.php';
+    $result=  mysql_query($query_check_ad_id);
+    while($row_id=  mysql_fetch_array($result))
+    {
+        $ad_id=$row_id['ads_id'];
+        
+    }
 $ads_title=$_POST['ads_title'];
 $ads_link=$_POST['ads_link'];
-$str_id='0123456789';
-$str_id=  str_shuffle($str_id);
-$ad_id=  substr($str_id,0,5);
+//$str_id='0123456789';
+//$str_id=  str_shuffle($str_id);
+$ad_id=  $ad_id+1;
 $query_insert_ads="insert into advertisement values('$ad_id','$ads_title','$ads_link')";
 require_once '../db.inc.php';
+if($ads_title!='' && $ads_link!='' && $ad_id!=''){
 mysql_query($query_insert_ads);
 $check_insert=1;
+}
+else
+{
+    $check_insert=2;
+}
+
 }
 /*$referral_code_check=  mysql_query($query_check_code);
 if(mysql_query($result_rfr)>=0)
@@ -286,6 +302,9 @@ if(mysql_query($result_rfr)>=0)
                         </div>
                     <?php if($check_insert==1){ ?>
                     <h3>Advertisement Added Successfully!!</h3>
+                    <?php } ?>
+                    <?php if($check_insert==2){ ?>
+                    <h3>Something wents wrong!!</h3>
                     <?php } ?>
 
                                       

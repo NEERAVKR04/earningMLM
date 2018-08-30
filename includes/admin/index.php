@@ -19,6 +19,7 @@ $referral_code_check=  mysql_query($query_check_code);
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
 <title>MuslimIn</title>
  
 <meta name="keywords" content="" />
@@ -162,7 +163,7 @@ $referral_code_check=  mysql_query($query_check_code);
   <a href="add_ads.php">Add Advertisement</a>
   <a href="view_users.php">Users</a>
   <a href="#">Profile</a>
-  <a href="#">Payment Proof Request</a>
+  <a href="check_payment.php">Payment Proof Request</a>
   <a href="#">Add Campaign</a>
   <a href="#">Your Referrals</a>
   <a href="#">Advertisement Campaign</a>
