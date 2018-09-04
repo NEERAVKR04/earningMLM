@@ -13,8 +13,6 @@ if(mysql_query($result_rfr)>=0)
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
-          $activation_status=$row["activation"];
-          $package=$row["package"];
        }
    }
 ?>
@@ -23,6 +21,7 @@ if(mysql_query($result_rfr)>=0)
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>MuslimIn</title>
  
 <meta name="keywords" content="" />
@@ -157,82 +156,93 @@ if(mysql_query($result_rfr)>=0)
         border-left: none;
         min-height: 550px;
     }
-    
 }
 </style>
-<div class="vertical-menu">
+<div class="vertical-menu" >
     <a href="index.php" class="active">Home</a>
-  <a href="article.php">Write Article</a>
-  <a href="sendpayment.php">Payment Options</a>
-  <a href="watch_adds.php">Watch Adds</a>
-  <a href="profile.php">Profile</a>
-  <a href="wallet.php">Wallet</a>
-  <a href="withdrawal_history.php">Withdrawal</a>
-  <a href="referral_list.php">Your Referrals</a>
+  <a href="#">Approve Articles</a>
+  <a href="activate_users.php">Activate Id</a>
+  <a href="add_ads.php">Add Advertisement</a>
+  <a href="#">Users</a>
+  <a href="#">Profile</a>
+  <a href="#">Payment Proof Request</a>
+  <a href="#">Add Campaign</a>
+  <a href="#">Your Referrals</a>
   <a href="#">Advertisement Campaign</a>
-  <a href="payment.php">Payment Proofs</a>
-  <a href="logout.php" class="active-red">LOGOUT</a>
+  <a href="#">How To work?</a>
+  <a href="#" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-
-
 <div class="vertical-content">
-    <style>
-        .activation{
-        float: left;
-        padding: 0px 12px;
-        border: 1px solid;
-        width: 65%;
-        min-height: 50px;
-        text-align: justify;
-        margin-left: 5rem;
-        margin-top: 1rem;
-        
-    }
-    </style>
-    <div class="activation">
-        <br/>
-<?php
-if($activation_status!='Y')
-{
-    echo "<label style='color:black'>"."Hey!!"." "."$first_name"."."."You need to "."<label style='color:red;'>". "<a href='payment.php'>"."activate "."</a>"."</label>". "your account to receive your earnings by making payment of your selected package"." i.e"." "."$package"."</label>"."<br/>";
-    echo "<br/>";
-    echo "<label style='color:black'>"."Or, If you have made payment already then upload your payment proof in " ."<a href='payment.php'>"." payment proof option" ."</a>"." to get your account activated & enable earning features & withdrawals!!"."</label>";
+<style>
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 79.74%;
 }
- else {
-        
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    //text-align: center;
 }
-?>
-    </div>
-    <style>
-    .square{
-        height: 200px;
-        width: 200px;
-        border: 3px solid;
-        display: inline-block;
-        float: left;
-        margin-left: 8%;
-        margin-top: 5%;
-        text-align: center;
-        font-size: 20px;
-        color: #4773C1;
-        
-        
-    }
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+#customers tr{
+    max-height: 2px;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
 </style>
+<?php
+echo "<table id='customers'>
+<tr>
+<th>Email</th>
+<th>Name</th>
+<th>Bank Name</th>
+<th>Bank Type</th>
+<th>A/C No.</th>
+<th>IFSC Code</th>
+<th>UPI</th>
+<th>Paytm</th>
+<th>Paypal</th>
+<th>Method</th>
+<th>Withdrawal Amount</th>
+</tr>";
 
+    $query_users="select * from paymentwithdraw where request='pending'";
+    require_once '../db.inc.php';
+    $result_users=  mysql_query($query_users);
+    while($row=  mysql_fetch_array($result_users))
+{
+echo "<tr>";
+echo "<td>" . $row['email'] . "</td>";
+echo "<td>" . $row['first_name'] ." ".$row['last_name']. "</td>";
+echo "<td>" . $row['bank_name'] . "</td>";
+echo "<td>" . $row['bank_type'] . "</td>";
+echo "<td>" . $row['account_no'] . "</td>";
+echo "<td>" . $row['ifsc'] . "</td>";
+echo "<td>" . $row['upi'] . "</td>";
+echo "<td>" . $row['paytm'] . "</td>";
+echo "<td>" . $row['paypal'] . "</td>";
+echo "<td>" . $row['method'] . "</td>";
+echo "<td>" . $row['amount'] . "</td>";
+echo "</tr>";
 
-<div class="square"><b style="color: #000;"><br/>Total Balance<?php echo "<br>"."<br>".$credit." $"; ?></b></div>
-<div class="square"><b style="color: #000;"><br/>Total Withdrawal<?php echo "<br>"."<br>".$withdrawal." $"; ?></b></div>
-<div class="square"><b style="color: #000;"><br/>Total Referrals<?php echo "<br>"."<br>".$referral_no; ?></b></div>
-<br/>
-    
-</div>
-
-    
-  
+}
+echo "</table>";
+?>
+</div>  
 <div id="footer">
    <?php require_once './footer.php'; ?>
 </div>

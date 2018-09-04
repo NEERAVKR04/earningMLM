@@ -25,7 +25,7 @@ $username=$_SESSION['username'];
 $imagename=$_FILES["payment_proof"]["name"];
 $transaction_id=$_POST['tid'];
 
-if($imagename==''){
+if($imagename==''){    
     $status=1;
 }
 
@@ -237,18 +237,18 @@ else{
             <h3 class="heading-primary">
                 How you want to pay us?
             </h3>
-    <form action="paymentproofs.php" method="POST" enctype="multipart/form-data">
+    <form action="payment.php" method="POST" enctype="multipart/form-data">
                 <div class="login_details">
                     <div class="login_details">
                     <div class="input_label">Email:</div>
                     <input readonly type="text" name="useremail" class="input_field" value="<?php echo "$useremail"?>" />
                     <div class="input_label">Transaction Id:</div>
-                    <input readonly type="text" name="tid" class="input_field" value="<?php echo "$transaction_id"?>" />
+                    <input type="text" name="tid" class="input_field" value="<?php echo "$transaction_id"?>" />
 
                     
                     <div class="input_label">Purpose:</div>
                     <select class="input_field" name="purpose" onselect="getdetails()">
-                        <option id="5" selected>Package Payment</option>
+                        <option id="5" selected>Activate Id</option>
                         <option id="6">Upgrade Plan</option>
                         <option id="7">Advertisement Campaign</option>
                         

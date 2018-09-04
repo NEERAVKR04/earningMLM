@@ -48,6 +48,25 @@ if(mysql_query($result_rfr)>=0)
        }
    }*/
 ?>
+<?php
+$delete_status=0;
+if(isset($_POST['delete'])){
+    $query_delete="delete from advertisement";
+    require_once '../db.inc.php';
+    mysql_query($query_delete);
+    $delete_status=1;
+}
+?>
+<?php
+$update_status=0;
+$set='NO';
+if(isset($_POST['update'])){
+    $query_delete="update users set ad_1='$set',ad_2='$set',ad_3='$set',ad_4='$set',ad_5='$set',ad_6='$set',ad_7='$set',ad_8='$set',ad_9='$set',ad_10='$set',ad_11='$set',ad_12='$set',ad_13='$set',ad_14='$set',ad_15='$set',ad_16='$set',ad_17='$set',ad_18='$set',ad_19='$set',ad_20='$set',ad_21='$set',ad_22='$set',ad_23='$set',ad_24='$set',ad_25='$set'";
+    require_once '../db.inc.php';
+    mysql_query($query_delete);
+    $update_status=1;
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -300,39 +319,40 @@ if(mysql_query($result_rfr)>=0)
                     <div class="btn_action">
                         <input type="submit" name="submit" value="Submit" class="btn_special" style="background-color: steelblue;" />
                         </div>
+                    
+                    
+                    <div class="btn_action">
+<!--                    <input type="submit" id="showButton" name="confirm" onclick="demoShow()" value="Delete Ads?" class="btn_special" style="background-color: steelblue; visibility: visible" /> 
+                        -->
+<!--                        <input type="submit" id="showButton" name="confirm" onclick="demoShow()" value="Delete Ads?" class="btn_special" style="background-color: steelblue; visibility: visible" />-->
+                        
+                        <input type="submit" id="del" name="delete" value="Delete" class="btn_special" style="background-color: steelblue;font-size: 16px" />
+                    
+                        <input type="submit" id="update" name="update" value="Update Ads View" class="btn_special" style="background-color: steelblue;font-size: 16px" />
+                    </div>
+
                     <?php if($check_insert==1){ ?>
-                    <h3>Advertisement Added Successfully!!</h3>
+                    <h3>Advertisement added successfully!!</h3>
                     <?php } ?>
                     <?php if($check_insert==2){ ?>
-                    <h3>Something wents wrong!!</h3>
+                    <h3>Something went wrong!!</h3>
                     <?php } ?>
-
+                    <?php if($delete_status==1){ ?>
+                    <h3>Ads Deleted from database!!</h3>
+                    <?php } ?>
+                    <?php if($update_status==1){ ?>
+                    <h3>Ads Status Updated for all users!!</h3>
+                    <?php } ?>
+                    
                                       
                 </div>
-                <!-- <table border="0" cellpadding="10">
-                <tbody>
-                    <tr>
-                        <td class="login_label">Email:</td>
-                        <td><input type="text" name="email" class="login_input" value="<?php echo "$email"?>" /></td>
-                    </tr>
-                    <tr>
-                        <td class="login_label">Password:</td>
-                        <td><input type="password" name="password" class="login_input" value="" /></td>
-                    </tr>
-                    <tr >
-                        <td colspan="2" style="text-align: center">
-                            <input type="submit" name="submit" value="Login" /></td>
-                        
-                    </tr>
-                </tbody>
-            </table> -->
+        
+                
             </form>
             
         </div>
 </div>
 
-    
-  
 <div id="footer">
    <?php require_once './footer.php'; ?>
 </div>

@@ -85,6 +85,67 @@
   </div>
 </div>
     <br/><br/><br/>
+    <style>
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 79.7%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    //text-align: center;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+#customers tr{
+    max-height: 2px;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    
+}
+</style>
+    <?php
+echo "<center>"."<form action='#' method='POST'>";
+echo "<h2>"."Recent 10 withdrawals to users "."</h2>";
+echo "<table id='customers'>
+<tr>
+<th>Withdrawal Amount</th>
+<th>Withdrawal Date</th>
+<th>Payment Proof</th>
+
+</tr>";
+$query_his="select * from withdrawal ORDER BY date DESC LIMIT 0,10";
+    require_once './includes/db.inc.php';
+    $result_his=  mysql_query($query_his);
+    $count=1;
+    while($row=  mysql_fetch_array($result_his)){
+       if($count<=10){
+           $proof_name=$row['proof'];
+           $email=$row['email'];
+           
+    echo "<tr>";
+    echo "<td>"."Withdrawal of "."<b>".$row['amount'] ."$"."</b>" ." has been processed to ".$row['email']. "</td>";
+    echo "<td>".$row['date'] . "</td>";
+    echo "<td>"."<a href='payment_proof/$proof_name' download>"."Payment Proof"."</a>"."</td>";
+    
+    echo "</tr>";
+    $count++;
+       }
+    }
+    
+echo "</table>"."</center>";
+echo "<br/>";
+?>
 </div>
     
     <div id="content2">

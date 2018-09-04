@@ -20,7 +20,7 @@ if(mysql_query($result_rfr)>=0)
 $user_email=$_POST['email'];
 if(isset($_POST['activate']))
 {
-$query_update_act="update users set activation='Y' where email='$user_email'";
+$query_update_act="update users set activation='Y',payment_approval='Approved' where email='$user_email'";
 require_once '../db.inc.php';
 mysql_query($query_update_act);
 //1st level

@@ -7,12 +7,23 @@
         $confirm_password = $_POST['confirm_password']; 
         require_once '../db.inc.php';
         $username = $_SESSION['username'];
+        $email=$_SESSION['email'];
         $password = md5($current_password);
-        $query = "select * from users where username='$user_name' and password='$password'";
+        $new_password=md5($new_password);
+        $query = "select * from users where username='$username' and password='$password'";
         $result = mysql_query($query);
         if(mysql_num_rows($result)==1){
+           
+            if($confirm_password!=$new_password){
+                $status=1;
+            }
+            else{
+            $query_change="update users set password='$new_password' where email='$email'";
+            require_once '../db.inc.php';
+            mysql_query($query_change);
             
-        }else{
+            }
+            }else{
             $status=3;
         }
     }

@@ -182,11 +182,11 @@ if(isset($_POST['getdetails'])){
   <a href="watch_adds.php">Watch Adds</a>
   <a href="profile.php">Profile</a>
   <a href="wallet.php">Wallet</a>
-  <a href="#">Withdrawal</a>
-  <a href="#">Your Referrals</a>
+  <a href="withdrawal_history.php">Withdrawal</a>
+  <a href="referral_list.php">Your Referrals</a>
   <a href="#">Advertisement Campaign</a>
-  <a href="paymentproofs.php">Payment Proofs</a>
-  <a href="#" class="active-red">LOGOUT</a>
+  <a href="payment.php">Payment Proofs</a>
+  <a href="logout.php" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
@@ -207,7 +207,7 @@ if(isset($_POST['getdetails'])){
                     </select>
                     <div class="input_label">Purpose:</div>
                     <select class="input_field" name="purpose" onselect="getdetails()">
-                        <option id="5" selected>Package Payment</option>
+                        <option id="5" selected>Activate Id</option>
                         <option id="6">Upgrade Plan</option>
                         <option id="7">Advertisement Campaign</option>
                         
@@ -231,22 +231,22 @@ if(isset($_POST['getdetails'])){
 
                 </div>
                 </form>
-            <?php if($method=='UPI' && $purpose=='Package Payment')
+            <?php if($method=='UPI' && $purpose=='Activate Id')
                     {?>
       <h2>Deposit <?php echo "$amount"; ?> at 9690531162@paytm UPI Address!!</h2>
       <h3>You need to upload payment proof/receipt after you pay!!<a href="paymentproofs.php"><b style="color: red">&nbsp;Upload</b></a></h3>
             <?php } ?>
-            <?php if($method=='PayTM' && $purpose=='Package Payment')
+            <?php if($method=='PayTM' && $purpose=='Activate Id')
                     {?>
       <h2>Deposit <?php echo "$amount"; ?> at 9690531162 PayTM Number!!</h2>
       <h3>You need to upload payment proof/receipt after you pay!!<a href="paymentproofs.php"><b style="color: red">&nbsp;Upload</b></a></h3>
             <?php } ?>
-            <?php if($method=='PayPal' && $purpose=='Package Payment')
+            <?php if($method=='PayPal' && $purpose=='Activate Id')
                     {?>
       <h2>Deposit <?php echo "$amount"; ?> at A/C No. 12345678921542 Bank Account!!</h2>
       <h3>You need to upload payment proof/receipt after you pay!!<a href="paymentproofs.php"><b style="color: red">&nbsp;Upload</b></a></h3>
             <?php } ?>
-            <?php if($method=='Bank Transfer' && $purpose=='Package Payment')
+            <?php if($method=='Bank Transfer' && $purpose=='Activate Id')
                     {?>
       <h2>Deposit <?php echo "$amount"; ?> at A/C No. 12345678921542 Bank Account!!</h2>
       <h3>You need to upload payment proof/receipt after you pay!!<a href="paymentproofs.php"><b style="color: red">&nbsp;Upload</b></a></h3>

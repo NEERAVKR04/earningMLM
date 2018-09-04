@@ -17,6 +17,7 @@ if(mysql_query($result_rfr)>=0)
        }
    }
 ?>
+
 <?php
 $content='';
 $title='';
@@ -32,6 +33,9 @@ if(isset($_POST['post'])){
     $creator_email=$email;
     $random_number='0123456789';
     $article_id= str_shuffle($random_number);
+    $article_id=  substr($article_id, 0,5);
+    $article_link="muslimin/myarticles/$username/$article_id";
+   
     
     if(empty($title)){
         
@@ -47,16 +51,37 @@ if(isset($_POST['post'])){
     }
     if(count($errors)==0)
     {
-    $query_article="insert into article values('$article_id','$title','$content','$category','$article_activation','$creator_name','$creator_email','NO','')";
-    require_once '../db.inc.php';
-    mysql_query($query_article);
+        date_default_timezone_set('Asia/Kolkata');
+        $date=  date('Y-m-d H:i:s');
+        //thumbnail
+        $error=array();
+    $file_name=$_FILES["image_thumb"]["name"];
+    
+    $file_size=$_FILES["image_thumb"]["size"];
+    $file_tmp=$_FILES["image_thumb"]["tmp_name"];
+    $file_type=$_FILES["image_thumb"]["type"];
+    $file_ext=  strtolower(end(explode('.',$_FILES["image_thumb"]["name"])));
+    $extensions=array("jpeg","jpg","png");
+    if(in_array($file_ext, $extensions)===false){
+        $error[]="extension not allowed, please choose a jpeg, jpg or png file";
+    }
+    if($file_size>2097152){
+        $error[]="File size must be upto 2MB Only";
+    }
+    if(empty($error)==true){
+        move_uploaded_file($file_tmp, "images/".$file_name);
         
+        
+    }else{
+        print_r($error);
     }
     
+    $query_article="insert into article values('$article_id','$title','$content','$category','$article_activation','$creator_name','$creator_email','NO','pending for admin approval','$date','$file_name','$article_link')";
+    require_once '../db.inc.php';
+    mysql_query($query_article);
     
-    
-    
-    
+      
+   }  
 }
 ?>
 <!DOCTYPE html>
@@ -248,7 +273,10 @@ if(isset($_POST['post'])){
 }
 </style>
 <h2 id="heading">Write Article:</h2>
-<form action="article.php" method="POST">
+<form action="article.php" method="POST" enctype="multipart/form-data">
+    <label style="margin-left: 0.5rem;">Upload Thumbnail: </label>
+        <input type="file" name="image_thumb"  value="Upload">
+        
 <table id="customers">
             
             <tr>
@@ -321,6 +349,7 @@ if(isset($_POST['post'])){
             </tr>
             <tr>
                 <td><label style="text-align: left; float: left;">Write your worthy points:</label>
+<!--                    <label style="text-align: left; float: left;">Characters left:</label>-->
                     <input disabled maxlength="10000" size="10" value="10000" id="counter"> 
 <!--                    <label>words left</label>-->
 <textarea spellcheck="true" required name="content" style=" width: 100%;
@@ -347,6 +376,8 @@ if(isset($_POST['post'])){
         }
         </script>
         <tr>
+        
+
             <td><center><input type="submit" name="post" style=" width: 15%;
     padding: 12px 20px;
     alignment-adjust: central;
@@ -359,6 +390,7 @@ if(isset($_POST['post'])){
         </tr>
 </table>
 </form>
+
 
 
     

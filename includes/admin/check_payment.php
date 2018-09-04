@@ -30,6 +30,16 @@ if(isset($_POST['hide'])){
                 }
             ?>
 <?php
+if(isset($_POST['unhide'])){
+                $query_unhide="update users set payment_approval='' where payment_approval='HIDE'";
+                require_once '../db.inc.php';
+                mysql_query($query_unhide);
+                
+                
+                    
+                }
+            ?>
+<?php
 //$query_article_details="select * from article";
 //    require_once '../db.inc.php';
 //    $result=  mysql_query($query_article_details);
@@ -212,7 +222,10 @@ if(isset($_POST['hide'])){
             
         }
     </style>
-<!--"<font style='margin-left: 1rem'>"-->
+    <form action="check_payment.php" method="POST">
+    <label><button name="unhide" style="margin-top: 1rem;margin-left: 2rem;border-radius: 2rem;">See Hidden Requests</button></label>
+    </form>
+    <!--"<font style='margin-left: 1rem'>"-->
     
     <?php
     $query_payment_status="select * from users";
@@ -263,7 +276,7 @@ if(isset($_POST['hide'])){
             echo "Payment Proof ".'<a style="color: #fff;font-size: .8rem;padding: .2rem 1rem;border: none;left:2rem;
                                     margin-bottom:1rem;margin-left:0.2rem;border-radius: 100px;align-items: center;justify-content: center;cursor: pointer;transition: 200ms ease-in;width: 7rem;outline: none;background-color:steelblue;" download href="data:image/jpeg;base64,'.base64_encode( $payment_proof ).'"/>'."Download & Check"."</a>";
             echo"<br/>";echo"<br/>";
-            echo "<label style='color:black;'>"."File name: "."</label>"."$image_name";
+           // echo "<label style='color:black;'>"."File name: "."</label>"."$image_name";
             echo "<br/>";
             echo "<input type='submit' name='hide' value='Hide' style='color: #fff;font-size: .8rem;padding: .2rem 1rem;border: none;left:2rem;
                    font-size:1rem;margin-bottom:1rem;margin-left:0.2rem;border-radius: 100px;align-items: center;justify-content: center;cursor: pointer;transition: 200ms ease-in;width: 7rem;outline: none;background-color:green;'>";

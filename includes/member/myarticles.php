@@ -2,6 +2,7 @@
 require_once './secure.inc.php';
 $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
+$email=$_SESSION['email'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
 $referral_code_check=  mysql_query($query_check_code);
@@ -17,25 +18,14 @@ if(mysql_query($result_rfr)>=0)
    }
 ?>
 <?php
-if(isset($_POST['approve'])){
+if(isset($_POST['delete'])){
                 $article_id=$_POST['id'];
+                
                 $email_user=$_POST['email_user'];
                 
-                $query_approve="update article set article_activation='YES' where article_id='$article_id'";
+                $query_delete="delete from article where article_id='$article_id'";
                 require_once '../db.inc.php';
-                mysql_query($query_approve);
-                //email
-                $query_credit="select * from users where email='$email_user'";
-                require_once '../db.inc.php';
-                $res_credit=mysql_query($query_credit);
-                while ($row_credit = mysql_fetch_assoc($res_credit)) {
-                    $credit=$row_credit['credit'];
-                    $credit=$credit+0.05;
-                    
-                    $query_credit="update users set credit='$credit' where email='$email_user'";
-                    require_once '../db.inc.php';
-                    mysql_query($query_credit);
-                }
+                mysql_query($query_delete);
                     
                 }
                
@@ -214,37 +204,41 @@ if(isset($_POST['approve'])){
     <b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 
     </div>-->
-<div class="vertical-content" style="height: 800px;">
+<div class="vertical-content" style="height: auto;">
 <!--"<font style='margin-left: 1rem'>"-->
-<h2 style="text-align: center;color: #000;">Public Blog</h2>
+<h2 style="text-align: center;color: #000;">My Articles</h2>
     <?php
-    $query_article_details="select * from article";
+    $query_article="select * from article where creator_email='$email'";
     require_once '../db.inc.php';
-    $result=  mysql_query($query_article_details);
-            $count=1;
-            if($count<=10)
-            {
-        while ($row_article = mysql_fetch_assoc($result)) {
-            if($row_article['article_activation']=='YES')
-            {
-            $article_id=$row_article['article_id'];
-        $email_user=$row_article['creator_email'];
-            echo "<form method='POST' action='article_approval.php'>";
-            echo "<ul type='none' style='margin-left:0.1rem;'>";
+    $result_article=  mysql_query($query_article);
+        while ($row_article = mysql_fetch_array($result_article)) {
             
-            //echo "<input readonly type='text' name='email_user' value='$email_user'>";
-            //echo "<li>"."<input readonly type='text' name='id' value='$article_id'>"."</li>";
+            $article_id=$row_article['article_id'];
+            $email_user=$row_article['creator_email'];
+            $date=$row_article['date'];
+            $message=$row_article['message'];
+            $article_image=$row_article['thumbnail'];
+            $article_link=$row_article['article_link'];
+            
+            
+            echo "<form method='POST' action='myarticles.php'>";
+            echo "<ul type='none' style='margin-left:0.1rem;'>";
+            echo '<img src="images/'.$article_image.'" style="width:90%;height:300px;display: block;margin-left:2rem;margin-right: auto;">';             //echo "<input readonly type='text' name='email_user' value='$email_user'>";
+            echo "<li>"."<input readonly type='text' name='id' value='$article_id' style='border:none;visibility:hidden;'>"."</li>";
             
             echo "<li style='color: white;
-                   padding: 8px;background-color: #4CAF50;overflow:hidden;width:95%'>".$row_article['article_title']."</li>";
+                   padding: 8px;background-color: #4CAF50;overflow:hidden;width:95%'>".$row_article['article_title']." "."<label style='float:right;'>"."Posted on: "."$date"."</li>";
             echo "<br/>";
             echo "<li style='text-align: justify;color:#000;'>"."Posted under: ".$row_article['article_category'];
             echo "<li style='text-align: justify;overflow:hidden;width:95%;'>"."<br/>".$row_article['article_content'];
-            echo "<h5>"."<label style='color:#2196F3'>"."Posted By: "."</label>".$row_article['creator_name']."</h5>";
+            echo "<h5>"."<label style='color:#2196F3'>"."Approval Status: "."</label>".$row_article['message']."<a href=\"".$row_article['article_link']."\" style='float:right;margin-right:1rem;'>"."</h5>";
+            if($row_article['disapprove']=='YES')
+            {
+                echo "<h5>"."<label style='color:red;'>"."Dis-Approved By Admin!!"."</label>"."</h5>"."<button name='delete' style='border-radius:3rem;' value='Delete Article'>"."Delete article"."</button>";
 
+            }
             echo "<hr>";
             //echo"<br/>"; echo "<input type='submit' name='approve' value='Approve'>";
-            $count=$count+1;
             
             
             echo "</ul>";
@@ -252,11 +246,9 @@ if(isset($_POST['approve'])){
             
             }
             
-        }
-            }
+           
     ?>
 </div>
-
     
   
 <div id="footer">

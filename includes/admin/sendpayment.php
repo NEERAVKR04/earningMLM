@@ -51,10 +51,35 @@ if(isset($_POST['update'])){
         //update withdrawal history 
         date_default_timezone_set('Asia/Kolkata');
         $date=  date('Y-m-d H:i:s');
-        $query_st_his="insert into withdrawal values('$user_email','$amount','$date')";
+        //admin payment proofs
+        $error=array();
+    $file_name=$_FILES["image_proof"]["name"];
+    
+    $file_size=$_FILES["image_proof"]["size"];
+    $file_tmp=$_FILES["image_proof"]["tmp_name"];
+    $file_type=$_FILES["image_proof"]["type"];
+    $file_ext=  strtolower(end(explode('.',$_FILES["image_proof"]["name"])));
+    $extensions=array("jpeg","jpg","png");
+    if(in_array($file_ext, $extensions)===false){
+        $error[]="extension not allowed, please choose a jpeg, jpg or png file";
+    }
+    if($file_size>2097152){
+        $error[]="File size must be upto 2MB Only";
+    }
+    if(empty($error)==true){
+        move_uploaded_file($file_tmp, "payment_proofs/".$file_name);
+        
+        
+    }else{
+        print_r($error);
+    }
+        $query_st_his="insert into withdrawal values('$user_email','$amount','$date','$file_name')";
         require_once '../db.inc.php';
         mysql_query($query_st_his);
         $display=1;
+        //admin payment proof
+        
+        
 
     }
         
@@ -165,7 +190,7 @@ if(isset($_POST['update'])){
             <h3 class="heading-primary">
                 Update Withdrawal !!
             </h3>
-            <form action="sendpayment.php" method="POST">
+            <form action="sendpayment.php" method="POST" enctype="multipart/form-data">
                 <div class="login_details">
                     <div class="input_label">User E-mail:</div>
                     <input type="text" name="email" class="input_field input_field--registration" value="<?php echo "$email"?>" />
@@ -176,12 +201,16 @@ if(isset($_POST['update'])){
                     <input type="text" name="amount" class="input_field input_field--registration" value="<?php echo "$amount"?>" />
                         <?php if(isset($errors['amount'])){?> <br/><span class="error"><?php echo $errors['amount'] ?></span>
                         <?php } ?>
+                        
+                        <div class="input_label">Upload Proof: </div>
+                        <input class="input_field input_field--registration" type="file" name="image_proof"  value="Upload" style="border-radius: 10rem;">
 
                     
                     <div class="btn_action">
                         <input type="submit" name="update" value="Update" class="btn_special" style="background-color: steelblue;" />
                         <!--<a class="btn_special" href="register.php" style="background-color: springgreen;">Signup</a>-->
                         <a class="btn_special" href="index.php" style="background-color: #eb2f64;">Home</a>   
+                        
                     </div>
 
                 </div>

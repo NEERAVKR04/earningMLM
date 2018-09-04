@@ -161,23 +161,6 @@ if(isset($_POST['submit'])){
                     
                             
                 </div>
-                <!-- <table border="0" cellpadding="10">
-                <tbody>
-                    <tr>
-                        <td class="login_label">Email:</td>
-                        <td><input type="text" name="email" class="login_input" value="<?php echo "$email"?>" /></td>
-                    </tr>
-                    <tr>
-                        <td class="login_label">Password:</td>
-                        <td><input type="password" name="password" class="login_input" value="" /></td>
-                    </tr>
-                    <tr >
-                        <td colspan="2" style="text-align: center">
-                            <input type="submit" name="submit" value="Login" /></td>
-                        
-                    </tr>
-                </tbody>
-            </table> -->
             </form>
             <?php if($status_check==2){ ?>
             <h2 style="color: red">Verify Your Account First.</h2>
@@ -187,7 +170,36 @@ if(isset($_POST['submit'])){
             <h2 style="color: red">Email Or, Password not match!!</h2>
             
             <?php } ?>
+            
         </div>
+    <div style="width: 100%;
+	overflow: hidden;
+	margin-left: 0px;
+        min-height: 370px;
+        background-color: #F7F6F6;
+        margin-top: 30rem;">
+        <br/><br/>
+<h3 style="color: #2980f3;
+    font-family: sans-serif;
+    font-size: 24.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 3px;
+    text-align: center">earn extra money</h3>
+    <h2 style="color: #5a5a5a;
+    font-family: sans-serif;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 3px;
+    
+    text-align: center">why <b>join us?</b></h2>
+    </div>
+<div id="footer">
+   <?php require_once './includes/guest/footer.php'; ?>
+</div>
+
     
     </body>
 </html>
