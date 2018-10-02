@@ -4,17 +4,16 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
-$referral_code_check=  mysql_query($query_check_code);
-if(mysql_query($result_rfr)>=0)
-   {
+$referral_code_check=  mysqli_query($con,$query_check_code);
+
      
-       while ($row = mysql_fetch_assoc($referral_code_check)) {
+       while ($row = mysqli_fetch_assoc($referral_code_check)) {
           $referral_code= $row["referral_code"];
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
        }
-   }
+   
 ?>
 <?php
 if(isset($_POST['del'])){
@@ -31,7 +30,7 @@ $username=$_SESSION['username'];
 echo "$username";
 $query_update1="update users set ad_1='YES' where username='$username'";
 include_once '../db.inc.php';
-mysql_query($query_update1);
+mysqli_query($con,$query_update1);
 
 }
 
@@ -41,7 +40,7 @@ mysql_query($query_update1);
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>MuslimIn</title>
+<title>Muslimin</title>
  
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -138,8 +137,8 @@ mysql_query($query_update1);
 
 .vertical-menu {
     width: 20%;
-    min-height: 975px;
-    max-height: 975px;
+    min-height: 1000px;
+    
     float: left;
     margin-left: 0px;
     background-color: #eee;
@@ -186,22 +185,24 @@ mysql_query($query_update1);
   <a href="sendpayment.php">Payment Options</a>
   <a href="watch_adds.php">Watch Adds</a>
   <a href="profile.php">Profile</a>
+    <a href="bankdetails.php">Bank Details</a>
+
   <a href="wallet.php">Wallet</a>
   <a href="withdrawal_history.php">Withdrawal</a>
   <a href="referral_list.php">Your Referrals</a>
-  <a href="#">Advertisement Campaign</a>
+  <a href="create_campaign.php">Advertisement Campaign</a>
   <a href="payment.php">Payment Proofs</a>
   <a href="logout.php" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-<div id='rightdiv' class="vertical-content">
+<div id='rightdiv' class="vertical-content" style="overflow-y: scroll">
 <style>
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 79.9%;
+    width: 100%;
 }
 
 #customers td, #customers th {
@@ -231,8 +232,8 @@ if(right>left){
 </script>
 <?php
 $query_link_status="select * from users where username='$username'";
-$result_link_status=  mysql_query($query_link_status);
-while ($row1 = mysql_fetch_array($result_link_status)) {
+$result_link_status=  mysqli_query($con,$query_link_status);
+while ($row1 = mysqli_fetch_array($result_link_status)) {
     $value1=$row1['ad_1'];
     $value2=$row1['ad_2'];
     $value3=$row1['ad_3'];
@@ -262,8 +263,8 @@ while ($row1 = mysql_fetch_array($result_link_status)) {
     
 }
 $query_ad_status="select * from users where username='$username'";
-$result_status=  mysql_query($query_ad_status);
-while($row_status=  mysql_fetch_assoc($result_status))
+$result_status=  mysqli_query($con,$query_ad_status);
+while($row_status=  mysqli_fetch_assoc($result_status))
 {
     $ad_1=$row_status['ad_1'];
     $ad_2=$row_status['ad_2'];
@@ -301,8 +302,8 @@ echo "<table id='customers'>
 </tr>";
 $ads_id_1="1";$ads_id_2="2";$ads_id_3="3";$ads_id_4="4";$ads_id_5="5";$ads_id_6="6";$ads_id_7="7";$ads_id_8="8";$ads_id_9="9";$ads_id_10="10";$ads_id_11="11";$ads_id_12="12";$ads_id_13="13";$ads_id_14="14";$ads_id_15="15";$ads_id_16="16";$ads_id_17="17";$ads_id_18="18";$ads_id_19="19";$ads_id_20="20";$ads_id_21="21";$ads_id_22="22";$ads_id_23="23";$ads_id_24="24";$ads_id_25="25";
 $query_ads_1="select * from advertisement where ads_id='$ads_id_1'";
-$result_1=  mysql_query($query_ads_1);
-while($row=  mysql_fetch_array($result_1))
+$result_1=  mysqli_query($con,$query_ads_1);
+while($row=  mysqli_fetch_array($result_1))
 {
     if($value1!='YES')
     {
@@ -326,8 +327,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     
 }
 $query_ads_2="select * from advertisement where ads_id='$ads_id_2'";
-$result_2=  mysql_query($query_ads_2);
-while($row=  mysql_fetch_array($result_2))
+$result_2=  mysqli_query($con,$query_ads_2);
+while($row=  mysqli_fetch_array($result_2))
 {
 if($value2!='YES')
     {
@@ -350,8 +351,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_3="select * from advertisement where ads_id='$ads_id_3'";
-$result_3=  mysql_query($query_ads_3);
-while($row=  mysql_fetch_array($result_3))
+$result_3=  mysqli_query($con,$query_ads_3);
+while($row=  mysqli_fetch_array($result_3))
 {
 if($value3!='YES')
     {
@@ -373,8 +374,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
 
     }
 }$query_ads_4="select * from advertisement where ads_id='$ads_id_4'";
-$result_4=  mysql_query($query_ads_4);
-while($row=  mysql_fetch_array($result_4)){
+$result_4=  mysqli_query($con,$query_ads_4);
+while($row=  mysqli_fetch_array($result_4)){
 if($value4!='YES')
     {
 echo "<tr>";
@@ -395,8 +396,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
 
     }
 }$query_ads_5="select * from advertisement where ads_id='$ads_id_5'";
-$result_5=  mysql_query($query_ads_5);
-while($row=  mysql_fetch_array($result_5))
+$result_5=  mysqli_query($con,$query_ads_5);
+while($row=  mysqli_fetch_array($result_5))
 {
 if($value5!='YES')
     {
@@ -419,8 +420,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_6="select * from advertisement where ads_id='$ads_id_6'";
-$result_6=  mysql_query($query_ads_6);
-while($row=  mysql_fetch_array($result_6))
+$result_6=  mysqli_query($con,$query_ads_6);
+while($row=  mysqli_fetch_array($result_6))
 {
 if($value6!='YES')
     {
@@ -443,8 +444,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_7="select * from advertisement where ads_id='$ads_id_7'";
-$result_7=  mysql_query($query_ads_7);
-while($row=  mysql_fetch_array($result_7))
+$result_7=  mysqli_query($con,$query_ads_7);
+while($row=  mysqli_fetch_array($result_7))
 {
 if($value7!='YES')
     {
@@ -467,8 +468,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_8="select * from advertisement where ads_id='$ads_id_8'";
-$result_8=  mysql_query($query_ads_8);
-while($row=  mysql_fetch_array($result_8))
+$result_8=  mysqli_query($con,$query_ads_8);
+while($row=  mysqli_fetch_array($result_8))
 {
 if($value8!='YES')
     {
@@ -491,8 +492,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_9="select * from advertisement where ads_id='$ads_id_9'";
-$result_9=  mysql_query($query_ads_9);
-while($row=  mysql_fetch_array($result_9))
+$result_9=  mysqli_query($con,$query_ads_9);
+while($row=  mysqli_fetch_array($result_9))
 {
 if($value9!='YES')
     {
@@ -515,8 +516,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_10="select * from advertisement where ads_id='$ads_id_10'";
-$result_10=  mysql_query($query_ads_10);
-while($row=  mysql_fetch_array($result_10))
+$result_10=  mysqli_query($con,$query_ads_10);
+while($row=  mysqli_fetch_array($result_10))
 {
 if($value10!='YES')
     {
@@ -539,8 +540,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_11="select * from advertisement where ads_id='$ads_id_11'";
-$result_11=  mysql_query($query_ads_11);
-while($row=  mysql_fetch_array($result_11))
+$result_11=  mysqli_query($con,$query_ads_11);
+while($row=  mysqli_fetch_array($result_11))
 {
 if($value11!='YES')
     {
@@ -563,8 +564,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_12="select * from advertisement where ads_id='$ads_id_12'";
-$result_12=  mysql_query($query_ads_12);
-while($row=  mysql_fetch_array($result_12))
+$result_12=  mysqli_query($con,$query_ads_12);
+while($row=  mysqli_fetch_array($result_12))
 {
 if($value12!='YES')
     {
@@ -587,8 +588,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_13="select * from advertisement where ads_id='$ads_id_13'";
-$result_13=  mysql_query($query_ads_13);
-while($row=  mysql_fetch_array($result_13))
+$result_13=  mysqli_query($con,$query_ads_13);
+while($row=  mysqli_fetch_array($result_13))
 {
 if($value13!='YES')
     {
@@ -611,8 +612,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_14="select * from advertisement where ads_id='$ads_id_14'";
-$result_14=  mysql_query($query_ads_14);
-while($row=  mysql_fetch_array($result_14))
+$result_14=  mysqli_query($con,$query_ads_14);
+while($row=  mysqli_fetch_array($result_14))
 {
 if($value14!='YES')
     {
@@ -635,8 +636,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_15="select * from advertisement where ads_id='$ads_id_15'";
-$result_15=  mysql_query($query_ads_15);
-while($row=  mysql_fetch_array($result_15))
+$result_15=  mysqli_query($con,$query_ads_15);
+while($row=  mysqli_fetch_array($result_15))
 {
 if($value15!='YES')
     {
@@ -659,8 +660,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_16="select * from advertisement where ads_id='$ads_id_16'";
-$result_16=  mysql_query($query_ads_16);
-while($row=  mysql_fetch_array($result_16))
+$result_16=  mysqli_query($con,$query_ads_16);
+while($row=  mysqli_fetch_array($result_16))
 {
 if($value16!='YES')
     {
@@ -683,8 +684,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_17="select * from advertisement where ads_id='$ads_id_17'";
-$result_17=  mysql_query($query_ads_17);
-while($row=  mysql_fetch_array($result_17))
+$result_17=  mysqli_query($con,$query_ads_17);
+while($row=  mysqli_fetch_array($result_17))
 {
 if($value17!='YES')
     {
@@ -707,8 +708,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_18="select * from advertisement where ads_id='$ads_id_18'";
-$result_18=  mysql_query($query_ads_18);
-while($row=  mysql_fetch_array($result_18))
+$result_18=  mysqli_query($con,$query_ads_18);
+while($row=  mysqli_fetch_array($result_18))
 {
 if($value18!='YES')
     {
@@ -731,8 +732,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_19="select * from advertisement where ads_id='$ads_id_19'";
-$result_19=  mysql_query($query_ads_19);
-while($row=  mysql_fetch_array($result_19))
+$result_19=  mysqli_query($con,$query_ads_19);
+while($row=  mysqli_fetch_array($result_19))
 {
 if($value9!='YES')
     {
@@ -755,8 +756,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_20="select * from advertisement where ads_id='$ads_id_20'";
-$result_20=  mysql_query($query_ads_20);
-while($row=  mysql_fetch_array($result_20))
+$result_20=  mysqli_query($con,$query_ads_20);
+while($row=  mysqli_fetch_array($result_20))
 {
 if($value20!='YES')
     {
@@ -779,8 +780,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_21="select * from advertisement where ads_id='$ads_id_21'";
-$result_21=  mysql_query($query_ads_21);
-while($row=  mysql_fetch_array($result_21))
+$result_21=  mysqli_query($con,$query_ads_21);
+while($row=  mysqli_fetch_array($result_21))
 {
 if($value21!='YES')
     {
@@ -803,8 +804,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_22="select * from advertisement where ads_id='$ads_id_22'";
-$result_22=  mysql_query($query_ads_22);
-while($row=  mysql_fetch_array($result_22))
+$result_22=  mysqli_query($con,$query_ads_22);
+while($row=  mysqli_fetch_array($result_22))
 {
 if($value22!='YES')
     {
@@ -827,8 +828,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_23="select * from advertisement where ads_id='$ads_id_23'";
-$result_23=  mysql_query($query_ads_23);
-while($row=  mysql_fetch_array($result_23))
+$result_23=  mysqli_query($con,$query_ads_23);
+while($row=  mysqli_fetch_array($result_23))
 {
 if($value23!='YES')
     {
@@ -851,8 +852,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_24="select * from advertisement where ads_id='$ads_id_24'";
-$result_24=  mysql_query($query_ads_24);
-while($row=  mysql_fetch_array($result_24))
+$result_24=  mysqli_query($con,$query_ads_24);
+while($row=  mysqli_fetch_array($result_24))
 {
 if($value24!='YES')
     {
@@ -875,8 +876,8 @@ echo "<td>" . $row['ads_name'] . "</td>";
     }
 }
 $query_ads_25="select * from advertisement where ads_id='$ads_id_25'";
-$result_25=  mysql_query($query_ads_25);
-while($row=  mysql_fetch_array($result_25))
+$result_25=  mysqli_query($con,$query_ads_25);
+while($row=  mysqli_fetch_array($result_25))
 {
 if($value25!='YES')
     {
@@ -904,7 +905,7 @@ echo "<td>" . $row['ads_name'] . "</td>";
 //echo "$username";
 //$query_update1="update users set ad_1='YES' where username='$username'";
 //include_once '../db.inc.php';
-//mysql_query($query_update1);
+//mysqli_query($query_update1);
 //}
 //function update2()
 //{
@@ -912,18 +913,18 @@ echo "<td>" . $row['ads_name'] . "</td>";
 //echo "$username";
 //$query_update2="update users set ad_2='YES' where username='$username'";
 //include_once '../db.inc.php';
-//mysql_query($query_update2);
+//mysqli_query($query_update2);
 //}
 
 //$query_fetch_ads="select * from advertisement";
-//$result=mysql_query($query_fetch_ads);
+//$result=mysqli_query($query_fetch_ads);
 //echo "<table id='customers'>
 //<tr>
 //<th>S.NO</th>
 //<th>ADVERTISEMENT TITLE</th>
 //<th>LINK</th>
 //</tr>";
-//while($row = mysql_fetch_array($result))
+//while($row = mysqli_fetch_array($result))
 //{
 //echo "<tr>";
 //echo "<td>" . $row['ads_id'] . "</td>";
@@ -932,7 +933,7 @@ echo "<td>" . $row['ads_name'] . "</td>";
 //    {
 //    echo 'if()'. "<td>"."<a href=\"".$row["ads_link"]."\" target='_BLANK'>"."$ads_status_name";
 //    $query_update="update users set ad_1='YES' where username='$username'";
-//    mysql_query($query_update);
+//    mysqli_query($query_update);
 //    
 //    }
 // else {
@@ -1256,8 +1257,170 @@ function clickAndDisable25(link) {
    </style>
    
 </div> 
-<div id="footer">
-   <?php require_once './footer.php'; ?>
+        <br/><br/>
+        <style>
+    .squarefoot{
+        height:auto;
+        width: 22%;
+        border: 3px solid;
+        display: inline-block;
+        float: left;
+        margin-left: 8%;
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 20px;
+        color: #4773C1;
+        background-color: #fff;
+        margin-bottom: 2%;
+        
+        
+    }
+</style>
+<div style="width: 100%;
+	overflow: hidden;
+	margin-left: 0px;
+        height: 300px;
+        background-color: #eee;
+        ">
+        <br/>
+<h3 style="color: #2980f3;
+    font-family: sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 0px;
+    text-align: center">BEST OPPORTUNITY TO TRY YOUR LUCK. EARN BIG WITH <label style="color: tomato;">"MUSLIMIN"</label></h3>
+    
+        <style>
+#history {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#history td, #history th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 13.25px;
+    //text-align: center;
+}
+
+#history tr:nth-child(even){background-color: #f2f2f2;}
+
+#history tr:hover {background-color: #ddd;}
+#history tr{
+    max-height: 1.8px;
+}
+
+#history th {
+    padding-top: 10px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: #eee;
+}
+</style>
+    <style>
+        .announcements{
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid;
+        width: 65%;
+        min-height: 100px;
+        text-align: justify;
+        margin-left: 5rem;
+        margin-top: 4rem;
+        border-radius: 3px;
+        padding: 16px;
+        position: relative;
+        background-color: #eee;
+        
+    }
+    </style>
+               <style>
+            #footerdiv{
+                margin-left: 3rem;
+                width: 98%;
+                text-align: left;
+                margin-right: 1rem;
+            }
+            #footerdiv a{
+                text-decoration: none;
+                font-size: 13px;
+                text-align: justify;
+                margin-bottom: 0rem;
+                color: #000;
+                
+                
+            }
+        </style>
+        
+        <div id="footerdiv">
+            <div class="announcements" style="width:90%;margin-left: 0rem;border: none;">
+                <div class="squarefoot" style="border:none;width:25%;margin-top: -2rem;">
+    <form action="notification.php" method="POST">
+            <table id="history">
+            <th><a style="color: #fff;">Some Guides</a></th>
+
+                    <?php
+              
+          
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../howtowork.php' style='color:blue;'>"."How To Work?"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../opportunities.php' style='color:blue;'>"."Our Idea"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../privacy.php' style='color:blue;'>"."Have some queries?"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../opportunities.php' style='color:blue;'>"."Our Helping Plan"."</a>"."</td>"."</tr>";
+
+                
+                ?>
+        </table>
+        </form>
 </div>
+<div class="squarefoot" style="border:none;width:25%;margin-top: -2rem;">
+    <form action="index.php" method="POST">
+            <table id="history">
+                <th><a style="color: #fff;">Useful Links</a></th>
+                <?php
+          
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../loginuser.php' style='color:blue;'>"."Login"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../register.php' style='color:blue;'>"."Register"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../privacy.php' style='color:blue;'>"."Privacy Policy"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../contact.php' style='color:blue;'>"."Contact Us"."</a>"."</td>"."</tr>";
+
+                ?>  
+        </table>
+        </form>
+</div>
+<div class="squarefoot" style="border:none;width:25%;margin-top: -2rem;">
+    <form action="index.php" method="POST">
+            <table id="history">
+                <th><a style="color: #fff;">Opportunities</a></th>
+                <?php
+          
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../opportunities.php' style='color:blue;'>"."Business Opportunities"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../contact.php' style='color:blue;'>"."Need Help?"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../contact.php' style='color:blue;'>"."Whatsapp Help"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../howtowork.php' style='color:blue;'>"."How much you can earn?"."</a>"."</td>"."</tr>";
+
+                ?>  
+        </table>
+        </form>
+</div>
+                <br/>
+</div>
+<!--            <ul>  
+                <li><a href="terms_conditions.php">Terms & conditions </a><br/></li>                
+                <li><a href="howtowork.php">How To Work? </a><br/></li>
+                <li><a href="loginuser.php">Login </a><br/></li>
+                <li><a href="register.php">Register </a><br/></li>
+                <li><a href="privacy.php">Privacy </a><br/></li>
+                <li><a href="contact.php">Contact Us </a><br/></li>
+                <li><a href="opportunities.php">Business opportunities</a></li>
+            </ul>-->
+        </div>
+        <br/>
+        <br/>
+    </div>
+  
 </body>
 </html>

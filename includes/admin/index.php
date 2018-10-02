@@ -4,9 +4,9 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
-$referral_code_check=  mysql_query($query_check_code);
+$referral_code_check=  mysqli_query($con,$query_check_code);
      
-       while ($row = mysql_fetch_assoc($referral_code_check)) {
+       while ($row = mysqli_fetch_assoc($referral_code_check)) {
           $referral_code= $row["referral_code"];
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
@@ -20,7 +20,7 @@ $referral_code_check=  mysql_query($query_check_code);
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-<title>MuslimIn</title>
+<title>Muslimin</title>
  
 <meta name="keywords" content="" />
 <meta name="description" content="" />

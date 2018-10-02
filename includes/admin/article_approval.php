@@ -4,17 +4,15 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
-$referral_code_check=  mysql_query($query_check_code);
-if(mysql_query($result_rfr)>=0)
-   {
+$referral_code_check=  mysqli_query($con,$query_check_code);
      
-       while ($row = mysql_fetch_assoc($referral_code_check)) {
+       while ($row = mysqli_fetch_assoc($referral_code_check)) {
           $referral_code= $row["referral_code"];
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
        }
-   }
+   
 ?>
 <?php
 if(isset($_POST['approve'])){
@@ -23,18 +21,18 @@ if(isset($_POST['approve'])){
                 
                 $query_approve="update article set article_activation='YES',message='' where article_id='$article_id'";
                 require_once '../db.inc.php';
-                mysql_query($query_approve);
+                mysqli_query($con,$query_approve);
                 //email
                 $query_credit="select * from users where email='$email_user'";
                 require_once '../db.inc.php';
-                $res_credit=mysql_query($query_credit);
-                while ($row_credit = mysql_fetch_assoc($res_credit)) {
+                $res_credit=mysqli_query($con,$query_credit);
+                while ($row_credit = mysqli_fetch_assoc($res_credit)) {
                     $credit=$row_credit['credit'];
                     $credit=$credit+0.05;
                     
                     $query_credit="update users set credit='$credit' where email='$email_user'";
                     require_once '../db.inc.php';
-                    mysql_query($query_credit);
+                    mysqli_query($con,$query_credit);
                 }
                     
                 }
@@ -46,14 +44,14 @@ if(isset($_POST['disapprove'])){
                 $message=$_POST['message'];
                 $query_disapprove="update article set disapprove='YES',message='$message' where article_id='$article_id'";
                 require_once '../db.inc.php';
-                mysql_query($query_disapprove);
+                mysqli_query($con,$query_disapprove);
                 //email
 }
 ?>
 <?php
 //$query_article_details="select * from article";
 //    require_once '../db.inc.php';
-//    $result=  mysql_query($query_article_details);
+//    $result=  mysqli_query($con,$query_article_details);
 //            $status=1;
 //        while ($row_article = mysql_fetch_assoc($result)) {
 //            if($row_article['article_activation']!='NO')
@@ -67,8 +65,7 @@ if(isset($_POST['disapprove'])){
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MuslimIn</title>
+<title>Muslimin</title>
  
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -235,9 +232,9 @@ if(isset($_POST['disapprove'])){
     <?php
     $query_article_details="select * from article";
     require_once '../db.inc.php';
-    $result=  mysql_query($query_article_details);
+    $result=  mysqli_query($con,$query_article_details);
             $count=1;
-        while ($row_article = mysql_fetch_assoc($result)) {
+        while ($row_article = mysqli_fetch_assoc($result)) {
             if($row_article['article_activation']!='YES' && $row_article['disapprove']!='YES')
             {
             $article_id=$row_article['article_id'];
@@ -264,12 +261,6 @@ if(isset($_POST['disapprove'])){
             
         }
     ?>
-</div>
-
-    
-  
-<div id="footer">
-   <?php require_once './footer.php'; ?>
 </div>
 </body>
 </html>

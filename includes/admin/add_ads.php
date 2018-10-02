@@ -13,8 +13,8 @@ if(isset($_POST['submit'])){
     $ad_id=1;
     $query_check_ad_id="select * from advertisement ORDER BY ads_id DESC LIMIT 1";
     require_once '../db.inc.php';
-    $result=  mysql_query($query_check_ad_id);
-    while($row_id=  mysql_fetch_array($result))
+    $result=  mysqli_query($con,$query_check_ad_id);
+    while($row_id=  mysqli_fetch_array($result))
     {
         $ad_id=$row_id['ads_id'];
         
@@ -27,7 +27,7 @@ $ad_id=  $ad_id+1;
 $query_insert_ads="insert into advertisement values('$ad_id','$ads_title','$ads_link')";
 require_once '../db.inc.php';
 if($ads_title!='' && $ads_link!='' && $ad_id!=''){
-mysql_query($query_insert_ads);
+mysqli_query($con,$query_insert_ads);
 $check_insert=1;
 }
 else
@@ -53,7 +53,7 @@ $delete_status=0;
 if(isset($_POST['delete'])){
     $query_delete="delete from advertisement";
     require_once '../db.inc.php';
-    mysql_query($query_delete);
+    mysqli_query($con,$query_delete);
     $delete_status=1;
 }
 ?>
@@ -63,7 +63,7 @@ $set='NO';
 if(isset($_POST['update'])){
     $query_delete="update users set ad_1='$set',ad_2='$set',ad_3='$set',ad_4='$set',ad_5='$set',ad_6='$set',ad_7='$set',ad_8='$set',ad_9='$set',ad_10='$set',ad_11='$set',ad_12='$set',ad_13='$set',ad_14='$set',ad_15='$set',ad_16='$set',ad_17='$set',ad_18='$set',ad_19='$set',ad_20='$set',ad_21='$set',ad_22='$set',ad_23='$set',ad_24='$set',ad_25='$set'";
     require_once '../db.inc.php';
-    mysql_query($query_delete);
+    mysqli_query($con,$query_delete);
     $update_status=1;
 }
 ?>
@@ -72,7 +72,7 @@ if(isset($_POST['update'])){
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>MuslimIn</title>
+<title>Muslimin</title>
  
 <meta name="keywords" content="" />
 <meta name="description" content="" />

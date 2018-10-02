@@ -4,17 +4,15 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
-$referral_code_check=  mysql_query($query_check_code);
-if(mysql_query($result_rfr)>=0)
-   {
+$referral_code_check=  mysqli_query($con,$query_check_code);
      
-       while ($row = mysql_fetch_assoc($referral_code_check)) {
+       while ($row = mysqli_fetch_assoc($referral_code_check)) {
           $referral_code= $row["referral_code"];
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
        }
-   }
+  
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +20,7 @@ if(mysql_query($result_rfr)>=0)
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MuslimIn</title>
+<title>Muslimin</title>
  
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -175,7 +173,7 @@ if(mysql_query($result_rfr)>=0)
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-<div class="vertical-content">
+<div class="vertical-content" style="overflow-y: scroll;overflow-x: scroll;">
 <style>
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -207,10 +205,12 @@ if(mysql_query($result_rfr)>=0)
 <?php
 echo "<table id='customers'>
 <tr>
+<th>S.No</th>
 <th>Email</th>
 <th>Mobile</th>
 <th>Name</th>
 <th>Activation</th>
+<th>Package</th>
 <th>Referrals</th>
 <th>Code</th>
 <th>Country</th>
@@ -221,14 +221,18 @@ echo "<table id='customers'>
 </tr>";
     $query_users="select * from users";
     require_once '../db.inc.php';
-    $result_users=  mysql_query($query_users);
-    while($row=  mysql_fetch_array($result_users))
+    $result_users=  mysqli_query($con,$query_users);
+    $sno=1;
+    while($row=  mysqli_fetch_array($result_users))
 {
 echo "<tr>";
+echo "<td>".$sno."</td>";
 echo "<td>" . $row['email'] . "</td>";
 echo "<td>" . $row['mobile'] . "</td>";
 echo "<td>" . $row['first_name'] ." ".$row['last_name']. "</td>";
 echo "<td>" . $row['activation'] . "</td>";
+echo "<td>" . $row['package'] . "</td>";
+
 echo "<td>" . $row['referral_count'] . "</td>";
 echo "<td>" . $row['referral_code'] . "</td>";
 echo "<td>" . $row['country'] . "</td>";
@@ -237,7 +241,7 @@ echo "<td>" . $row['city'] . "</td>";
 echo "<td>" . $row['pincode'] . "</td>";
 echo "<td>" . $row['credit'] . "</td>";
 echo "</tr>";
-
+$sno++;
 }
 echo "</table>";
 ?>

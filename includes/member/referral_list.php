@@ -4,26 +4,28 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
-$referral_code_check=  mysql_query($query_check_code);
-if(mysql_query($result_rfr)>=0)
-   {
+$referral_code_check=  mysqli_query($con,$query_check_code);
+
      
-       while ($row = mysql_fetch_assoc($referral_code_check)) {
+       while ($row = mysqli_fetch_assoc($referral_code_check)) {
           $referral_code= $row["referral_code"];
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
           $activation_status=$row["activation"];
           $package=$row["package"];
-       }
+       
    }
+       if($activation_status!='Y'){
+           header('Location: payment.php');
+       }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>MuslimIn</title>
+<title>Muslimin</title>
  
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -58,7 +60,7 @@ if(mysql_query($result_rfr)>=0)
 	text-align: center;
         color: #FFFFFF;
         font-family: sans-serif;
-        font-size: 18px;
+        font-size: 16px;
 }
 
 #header-reg li {
@@ -100,7 +102,7 @@ if(mysql_query($result_rfr)>=0)
 	padding: 5px 15px;
 	text-transform: uppercase;
 	text-decoration: none;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: bold;
 	color: #FFFFFF;
 }
@@ -121,7 +123,7 @@ if(mysql_query($result_rfr)>=0)
 .vertical-menu {
     width: 20%;
     float: left;
-    min-height: 550px;
+    min-height: 1000px;
     margin-left: 0px;
     background-color: #eee;
     border: 1px solid;
@@ -155,7 +157,7 @@ if(mysql_query($result_rfr)>=0)
         border: 1px solid;
         width: 80%;
         border-left: none;
-        min-height: 550px;
+        min-height: 1000px;
     }
     
 }
@@ -166,28 +168,31 @@ if(mysql_query($result_rfr)>=0)
   <a href="sendpayment.php">Payment Options</a>
   <a href="watch_adds.php">Watch Adds</a>
   <a href="profile.php">Profile</a>
+    <a href="bankdetails.php">Bank Details</a>
+
   <a href="wallet.php">Wallet</a>
   <a href="withdrawal_history.php">Withdrawal</a>
   <a href="referral_list.php">Your Referrals</a>
-  <a href="#">Advertisement Campaign</a>
+  <a href="create_campaign.php">Advertisement Campaign</a>
   <a href="payment.php">Payment Proofs</a>
   <a href="logout.php" class="active-red">LOGOUT</a>
   
     <!--<b style="color: #000;margin-left: 25px">Your Referral Code is:&nbsp;</b><b style="color: tomato"><?php echo "<b>".$referral_code."</b>";?></b>
 -->
     </div>
-<div class="vertical-content">
+<div class="vertical-content" style="overflow-y: scroll;overflow-x: scroll;">
     
     <style>
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 79.7%;
+    width: 100%;
 }
 
 #customers td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
+    font-size: 14px;
     //text-align: center;
 }
 
@@ -228,15 +233,15 @@ echo "<table id='customers'>
 </tr>";
 $query_users="select * from users where username='$username' ";
     require_once '../db.inc.php';
-    $result_users=  mysql_query($query_users);
-    while($row=  mysql_fetch_array($result_users)){
+    $result_users=  mysqli_query($con,$query_users);
+    while($row=  mysqli_fetch_array($result_users)){
         $referral_code=$row['referral_code'];
     }
     $query_referrals="select * from users where refer_code='$referral_code'";
     require_once '../db.inc.php';
-    $result_referrals=  mysql_query($query_referrals);
+    $result_referrals=  mysqli_query($con,$query_referrals);
     if($referral_code!=''){
-    while ($row1 = mysql_fetch_array($result_referrals)) {
+    while ($row1 = mysqli_fetch_array($result_referrals)) {
         $members_referral_code=$row1['referral_code'];
         
     echo "<tr>";
@@ -248,15 +253,13 @@ $query_users="select * from users where username='$username' ";
     echo "<td>".$row1['referral_count']."</td>";
     echo "<td>"."ME"."</td>";
     echo "</tr>";
-    }
-    }
     //2nd level
 
 $query_2level="select * from users where refer_code='$members_referral_code'";
 require_once '../db.inc.php';
-$result_2level=  mysql_query($query_2level);
+$result_2level=  mysqli_query($con,$query_2level);
 if($members_referral_code!=''){
-while ($row2 = mysql_fetch_array($result_2level)) {
+while ($row2 = mysqli_fetch_array($result_2level)) {
         $members_referral_code2=$row2['referral_code'];
         
     echo "<tr>";
@@ -274,8 +277,8 @@ while ($row2 = mysql_fetch_array($result_2level)) {
 if($members_referral_code2!=''){
 $query_3level="select * from users where refer_code='$members_referral_code2'";
 require_once '../db.inc.php';
-$result_3level=  mysql_query($query_3level);
-while ($row3 = mysql_fetch_array($result_3level)) {
+$result_3level=  mysqli_query($con,$query_3level);
+while ($row3 = mysqli_fetch_array($result_3level)) {
         $members_referral_code3=$row3['referral_code'];
         
     echo "<tr>";
@@ -293,8 +296,8 @@ while ($row3 = mysql_fetch_array($result_3level)) {
 if($members_referral_code3!=''){
 $query_4level="select * from users where refer_code='$members_referral_code3'";
 require_once '../db.inc.php';
-$result_4level=  mysql_query($query_4level);
-while ($row4 = mysql_fetch_array($result_4level)) {
+$result_4level=  mysqli_query($con,$query_4level);
+while ($row4 = mysqli_fetch_array($result_4level)) {
         $members_referral_code4=$row4['referral_code'];
         
     echo "<tr>";
@@ -312,8 +315,8 @@ while ($row4 = mysql_fetch_array($result_4level)) {
 if($members_referral_code4!=''){
 $query_5level="select * from users where refer_code='$members_referral_code4'";
 require_once '../db.inc.php';
-$result_5level=  mysql_query($query_5level);
-while ($row5 = mysql_fetch_array($result_5level)) {
+$result_5level=  mysqli_query($con,$query_5level);
+while ($row5 = mysqli_fetch_array($result_5level)) {
         $members_referral_code5=$row5['referral_code'];
         
     echo "<tr>";
@@ -331,8 +334,8 @@ while ($row5 = mysql_fetch_array($result_5level)) {
 if($members_referral_code5!=''){
 $query_6level="select * from users where refer_code='$members_referral_code5'";
 require_once '../db.inc.php';
-$result_6level=  mysql_query($query_6level);
-while ($row6 = mysql_fetch_array($result_6level)) {
+$result_6level=  mysqli_query($con,$query_6level);
+while ($row6 = mysqli_fetch_array($result_6level)) {
         $members_referral_code6=$row6['referral_code'];
         
     echo "<tr>";
@@ -350,8 +353,8 @@ while ($row6 = mysql_fetch_array($result_6level)) {
 if($members_referral_code6!=''){
 $query_7level="select * from users where refer_code='$members_referral_code6'";
 require_once '../db.inc.php';
-$result_7level=  mysql_query($query_7level);
-while ($row7 = mysql_fetch_array($result_7level)) {
+$result_7level=  mysqli_query($con,$query_7level);
+while ($row7 = mysqli_fetch_array($result_7level)) {
         $members_referral_code7=$row7['referral_code'];
         
     echo "<tr>";
@@ -369,8 +372,8 @@ while ($row7 = mysql_fetch_array($result_7level)) {
 if($members_referral_code7!=''){
 $query_8level="select * from users where refer_code='$members_referral_code7'";
 require_once '../db.inc.php';
-$result_8level=  mysql_query($query_8level);
-while ($row8 = mysql_fetch_array($result_8level)) {
+$result_8level=  mysqli_query($con,$query_8level);
+while ($row8 = mysqli_fetch_array($result_8level)) {
         $members_referral_code8=$row8['referral_code'];
         
     echo "<tr>";
@@ -388,8 +391,8 @@ while ($row8 = mysql_fetch_array($result_8level)) {
 if($members_referral_code8!=''){
 $query_9level="select * from users where refer_code='$members_referral_code8'";
 require_once '../db.inc.php';
-$result_9level=  mysql_query($query_9level);
-while ($row9 = mysql_fetch_array($result_9level)) {
+$result_9level=  mysqli_query($con,$query_9level);
+while ($row9 = mysqli_fetch_array($result_9level)) {
         $members_referral_code9=$row9['referral_code'];
         
     echo "<tr>";
@@ -407,8 +410,8 @@ while ($row9 = mysql_fetch_array($result_9level)) {
 if($members_referral_code9!=''){
 $query_10level="select * from users where refer_code='$members_referral_code9'";
 require_once '../db.inc.php';
-$result_10level=  mysql_query($query_10level);
-while ($row10 = mysql_fetch_array($result_10level)) {
+$result_10level=  mysqli_query($con,$query_10level);
+while ($row10 = mysqli_fetch_array($result_10level)) {
         $members_referral_code10=$row10['referral_code'];
         
     echo "<tr>";
@@ -423,14 +426,177 @@ while ($row10 = mysql_fetch_array($result_10level)) {
 }
 }
 
+    
+    }
+    }
+    
 echo "</table>";
 ?>
 </div>
-
+        <br/><br/>
+        <style>
+    .squarefoot{
+        height:auto;
+        width: 22%;
+        border: 3px solid;
+        display: inline-block;
+        float: left;
+        margin-left: 8%;
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 20px;
+        color: #4773C1;
+        background-color: #fff;
+        margin-bottom: 2%;
+        
+        
+    }
+</style>
+<div style="width: 100%;
+	overflow: hidden;
+	margin-left: 0px;
+        height: 300px;
+        background-color: #eee;
+        ">
+        <br/>
+<h3 style="color: #2980f3;
+    font-family: sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 0px;
+    text-align: center">BEST OPPORTUNITY TO TRY YOUR LUCK. EARN BIG WITH <label style="color: tomato;">"MUSLIMIN"</label></h3>
     
-  
-<div id="footer">
-   <?php require_once './footer.php'; ?>
+        <style>
+#history {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#history td, #history th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 13.25px;
+    //text-align: center;
+}
+
+#history tr:nth-child(even){background-color: #f2f2f2;}
+
+#history tr:hover {background-color: #ddd;}
+#history tr{
+    max-height: 1.8px;
+}
+
+#history th {
+    padding-top: 10px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: #eee;
+}
+</style>
+    <style>
+        .announcements{
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid;
+        width: 65%;
+        min-height: 100px;
+        text-align: justify;
+        margin-left: 5rem;
+        margin-top: 4rem;
+        border-radius: 3px;
+        padding: 16px;
+        position: relative;
+        background-color: #eee;
+        
+    }
+    </style>
+               <style>
+            #footerdiv{
+                margin-left: 3rem;
+                width: 98%;
+                text-align: left;
+                margin-right: 1rem;
+            }
+            #footerdiv a{
+                text-decoration: none;
+                font-size: 13px;
+                text-align: justify;
+                margin-bottom: 0rem;
+                color: #000;
+                
+                
+            }
+        </style>
+        
+        <div id="footerdiv">
+            <div class="announcements" style="width:90%;margin-left: 0rem;border: none;">
+                <div class="squarefoot" style="border:none;width:25%;margin-top: -2rem;">
+    <form action="notification.php" method="POST">
+            <table id="history">
+            <th><a style="color: #fff;">Some Guides</a></th>
+
+                    <?php
+              
+          
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../howtowork.php' style='color:blue;'>"."How To Work?"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../opportunities.php' style='color:blue;'>"."Our Idea"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../privacy.php' style='color:blue;'>"."Have some queries?"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../opportunities.php' style='color:blue;'>"."Our Helping Plan"."</a>"."</td>"."</tr>";
+
+                
+                ?>
+        </table>
+        </form>
 </div>
+<div class="squarefoot" style="border:none;width:25%;margin-top: -2rem;">
+    <form action="index.php" method="POST">
+            <table id="history">
+                <th><a style="color: #fff;">Useful Links</a></th>
+                <?php
+          
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../loginuser.php' style='color:blue;'>"."Login"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../register.php' style='color:blue;'>"."Register"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../privacy.php' style='color:blue;'>"."Privacy Policy"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../contact.php' style='color:blue;'>"."Contact Us"."</a>"."</td>"."</tr>";
+
+                ?>  
+        </table>
+        </form>
+</div>
+<div class="squarefoot" style="border:none;width:25%;margin-top: -2rem;">
+    <form action="index.php" method="POST">
+            <table id="history">
+                <th><a style="color: #fff;">Opportunities</a></th>
+                <?php
+          
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../opportunities.php' style='color:blue;'>"."Business Opportunities"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../contact.php' style='color:blue;'>"."Need Help?"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../contact.php' style='color:blue;'>"."Whatsapp Help"."</a>"."</td>"."</tr>";
+                echo "<tr style='background:none;'>"."<td>"."<a href='../../howtowork.php' style='color:blue;'>"."How much you can earn?"."</a>"."</td>"."</tr>";
+
+                ?>  
+        </table>
+        </form>
+</div>
+                <br/>
+</div>
+<!--            <ul>  
+                <li><a href="terms_conditions.php">Terms & conditions </a><br/></li>                
+                <li><a href="howtowork.php">How To Work? </a><br/></li>
+                <li><a href="loginuser.php">Login </a><br/></li>
+                <li><a href="register.php">Register </a><br/></li>
+                <li><a href="privacy.php">Privacy </a><br/></li>
+                <li><a href="contact.php">Contact Us </a><br/></li>
+                <li><a href="opportunities.php">Business opportunities</a></li>
+            </ul>-->
+        </div>
+        <br/>
+        <br/>
+    </div>
+  
 </body>
 </html>

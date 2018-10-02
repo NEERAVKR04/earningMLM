@@ -2,8 +2,8 @@
 $username=$_SESSION['username'];
 $query_st="select * from users where username='$username'";
 require_once '../db.inc.php';
-$result=  mysql_query($query_st);
-while($row=  mysql_fetch_array($result)){
+$result=  mysqli_query($con,$query_st);
+while($row=  mysqli_fetch_array($result)){
     $package_name=$row['package_name'];
 }
 ?>

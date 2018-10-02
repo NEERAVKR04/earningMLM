@@ -4,17 +4,14 @@ $first_name=$_SESSION['first_name'];
 $username=$_SESSION['username'];
 $query_check_code="select * from users where username='$username'";
 require_once '../db.inc.php';
-$referral_code_check=  mysql_query($query_check_code);
-if(mysql_query($result_rfr)>=0)
-   {
-     
-       while ($row = mysql_fetch_assoc($referral_code_check)) {
+$referral_code_check=  mysqli_query($con,$query_check_code);    
+       while ($row = mysqli_fetch_assoc($referral_code_check)) {
           $referral_code= $row["referral_code"];
           $credit=$row["credit"];
           $withdrawal=$row["total_withdrawal"];
           $referral_no=$row["referral_count"];
        }
-   }
+   
 ?>
 <!DOCTYPE html>
 <html>
@@ -120,7 +117,7 @@ if(mysql_query($result_rfr)>=0)
 .vertical-menu {
     width: 20%;
     float: left;
-    min-height: 550px;
+    min-height: 770px;
     margin-left: 0px;
     background-color: #eee;
     border: 1px solid;
@@ -218,12 +215,13 @@ echo "<table id='customers'>
 <th>Paypal</th>
 <th>Method</th>
 <th>Withdrawal Amount</th>
+<th>HIDE</th>
 </tr>";
 
     $query_users="select * from paymentwithdraw where request='pending'";
     require_once '../db.inc.php';
-    $result_users=  mysql_query($query_users);
-    while($row=  mysql_fetch_array($result_users))
+    $result_users=  mysqli_query($con,$query_users);
+    while($row=  mysqli_fetch_array($result_users))
 {
 echo "<tr>";
 echo "<td>" . $row['email'] . "</td>";
@@ -237,14 +235,42 @@ echo "<td>" . $row['paytm'] . "</td>";
 echo "<td>" . $row['paypal'] . "</td>";
 echo "<td>" . $row['method'] . "</td>";
 echo "<td>" . $row['amount'] . "</td>";
+echo "<td>"."<a href=''>"."HIDE"."</a>"."</td>";
 echo "</tr>";
 
 }
 echo "</table>";
 ?>
 </div>  
-<div id="footer">
-   <?php require_once './footer.php'; ?>
+<div class="square" style="margin-top: 1px;">
+<h4>We usually take 24-48 hours for processing your withdrawal request!!
+<br/>
+But, sometimes it can take more than 48 hours. So, be patient.
+</h4>
 </div>
+<div style="width: 100%;
+	overflow: hidden;
+	margin-left: 0px;
+        min-height: 420px;
+        background-color: #eee;">
+        <br/><br/>
+<h3 style="color: #2980f3;
+    font-family: sans-serif;
+    font-size: 24.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 3px;
+    text-align: center">earn extra money</h3>
+    <h2 style="color: #5a5a5a;
+    font-family: sans-serif;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 3px;
+    
+    text-align: center">why <b>join us?</b></h2>
+    </div>
+
 </body>
 </html>
